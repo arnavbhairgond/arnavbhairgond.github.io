@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Swagsearch</title>
     <meta name="description" content="Swagsearch – The internet’s best thrift finds, powered by real people. Curated secondhand fashion, found by finders." />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
@@ -14,7 +14,9 @@
         color: #3e2723;
       }
       .font-display {
-        font-family: 'Playfair Display', serif;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 300;
+        letter-spacing: 0.1em;
       }
       .fade-in {
         opacity: 0;
@@ -40,10 +42,10 @@
   </head>
   <body class="min-h-screen flex flex-col justify-between">
     <!-- Hero Section -->
-    <section class="flex flex-col items-center justify-center min-h-[60vh] pt-16 pb-8 px-4">
-      <h1 class="font-display text-5xl md:text-7xl font-bold mb-4 tracking-tight text-center">Swagsearch</h1>
-      <h2 class="text-xl md:text-2xl font-semibold mb-2 text-center">The internet’s best thrift finds — powered by you.</h2>
-      <p id="hero-animated" class="typewriter text-lg md:text-xl text-center mt-2 mb-6" style="min-height:2.5em;"></p>
+    <section class="flex flex-col items-center justify-center min-h-[80vh] pt-20 pb-12 px-4">
+      <h1 class="font-display text-5xl md:text-7xl font-light mb-12 tracking-widest text-center uppercase">SWAGSEARCH</h1>
+      <h2 class="text-xl md:text-2xl font-light mb-8 text-center tracking-wide">The internet’s best thrift finds — powered by you.</h2>
+      <p id="hero-animated" class="typewriter text-lg md:text-xl text-center mt-4 mb-10 font-light" style="min-height:2.5em;"></p>
     </section>
     <!-- About Section -->
     <section class="max-w-2xl mx-auto py-12 px-4 fade-in">
@@ -105,14 +107,42 @@
       const heroLines = [
         "Real people. Real steals.",
         "We don’t thrift for trends. We thrift for truth.",
-        "Find what no one else is looking for — until they are."
+        "Find what no one else is looking for — until they are.",
+        "Curated by humans, not algorithms.",
+        "Thrifted treasures, handpicked daily.",
+        "The thrill of the find, every time.",
+        "Discover what the bots can’t.",
+        "Vintage gold, before it’s gone.",
+        "For the seekers, not the scrollers.",
+        "Unlock the internet’s hidden gems.",
+        "Style with a story.",
+        "Finders keepers, literally.",
+        "The best finds aren’t trending — yet.",
+        "Because taste can’t be automated.",
+        "Fashion’s best kept secrets, revealed.",
+        "Scroll less. Find more.",
+        "The future of thrifting is personal.",
+        "Your next favorite piece is waiting.",
+        "Not just secondhand — second to none.",
+        "Where the rare becomes yours."
       ];
+      // Shuffle the lines for random cycling
+      function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex !== 0) {
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex--;
+          [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+      }
+      let shuffledLines = shuffle([...heroLines]);
       let heroIndex = 0;
       let charIndex = 0;
       const heroEl = document.getElementById('hero-animated');
       function typeLine() {
         if (!heroEl) return;
-        const line = heroLines[heroIndex];
+        const line = shuffledLines[heroIndex];
         heroEl.textContent = line.slice(0, charIndex);
         charIndex++;
         if (charIndex <= line.length) {
@@ -120,7 +150,8 @@
         } else {
           setTimeout(() => {
             charIndex = 0;
-            heroIndex = (heroIndex + 1) % heroLines.length;
+            heroIndex = (heroIndex + 1) % shuffledLines.length;
+            if (heroIndex === 0) shuffledLines = shuffle([...heroLines]);
             setTimeout(typeLine, 1000);
           }, 1200);
         }
