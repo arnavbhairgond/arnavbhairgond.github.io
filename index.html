@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Swagsearch</title>
+    <meta name="description" content="Swagsearch – The internet’s best thrift finds, powered by real people. Curated secondhand fashion, found by finders." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background: #fdf6ee;
+        color: #3e2723;
+      }
+      .font-display {
+        font-family: 'Playfair Display', serif;
+      }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: none;
+      }
+      .typewriter {
+        display: inline-block;
+        border-right: 2px solid #3e2723;
+        white-space: nowrap;
+        overflow: hidden;
+        animation: blink-caret 0.75s step-end infinite;
+      }
+      @keyframes blink-caret {
+        0%, 100% { border-color: #3e2723; }
+        50% { border-color: transparent; }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col justify-between">
+    <!-- Hero Section -->
+    <section class="flex flex-col items-center justify-center min-h-[60vh] pt-16 pb-8 px-4">
+      <h1 class="font-display text-5xl md:text-7xl font-bold mb-4 tracking-tight text-center">Swagsearch</h1>
+      <h2 class="text-xl md:text-2xl font-semibold mb-2 text-center">The internet’s best thrift finds — powered by you.</h2>
+      <p id="hero-animated" class="typewriter text-lg md:text-xl text-center mt-2 mb-6" style="min-height:2.5em;"></p>
+    </section>
+    <!-- About Section -->
+    <section class="max-w-2xl mx-auto py-12 px-4 fade-in">
+      <h3 class="font-display text-2xl md:text-3xl font-bold mb-4">A curated chaos of secondhand brilliance.</h3>
+      <p class="text-lg mb-2">Swagsearch is a handpicked stream of the internet’s best secondhand fashion — found by real people with real taste.</p>
+      <p class="text-lg mb-2">No algorithms. No bots. Just finders: thrifters, stylists, vintage heads, and internet diggers who know how to spot gold before it sells.</p>
+      <p class="text-lg">We’re building the easiest way to share and discover the good stuff — before it disappears.</p>
+    </section>
+    <!-- How It Works Section -->
+    <section class="max-w-5xl mx-auto py-12 px-4 fade-in">
+      <h3 class="font-display text-2xl md:text-3xl font-bold mb-8 text-center">You find. We feature. They buy.</h3>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="text-4xl mb-2">🕵️‍♂️</div>
+          <h4 class="font-semibold mb-2">Find something sick online</h4>
+          <p class="text-base">You’re already scrolling Depop. Might as well save a gem.</p>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl mb-2">📤</div>
+          <h4 class="font-semibold mb-2">Send it with one click</h4>
+          <p class="text-base">Our browser extension lets you push listings to Swagsearch instantly.</p>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl mb-2">💸</div>
+          <h4 class="font-semibold mb-2">Get paid when someone buys</h4>
+          <p class="text-base">When a listing you found is unlocked, you get a cut. Simple.</p>
+        </div>
+      </div>
+    </section>
+    <!-- Demo Section -->
+    <section class="max-w-2xl mx-auto py-12 px-4 fade-in">
+      <h3 class="font-display text-2xl md:text-3xl font-bold mb-4">Coming soon — but you can sneak a look.</h3>
+      <div class="w-full aspect-video bg-[#eaddcf] rounded-lg flex items-center justify-center mb-4">
+        <span class="text-[#a1887f] text-lg">[Video demo coming soon]</span>
+      </div>
+      <p class="text-center text-base">Watch a quick preview of how Swagsearch works in real time. The full experience is coming.</p>
+    </section>
+    <!-- Contact Section -->
+    <section class="max-w-xl mx-auto py-12 px-4 fade-in">
+      <h3 class="font-display text-2xl md:text-3xl font-bold mb-4">Want in early?</h3>
+      <p class="mb-6">We’re opening up soon. If you’re a finder, stylist, developer, or just curious — drop us a message.</p>
+      <form id="contact-form" class="space-y-4">
+        <div class="flex flex-col md:flex-row gap-4">
+          <input type="text" name="name" placeholder="Name" required class="flex-1 px-4 py-3 rounded bg-[#f5e9da] border border-[#a1887f] focus:outline-none focus:ring-2 focus:ring-[#a1887f] text-[#3e2723] placeholder-[#a1887f]" />
+          <input type="email" name="email" placeholder="Email" required class="flex-1 px-4 py-3 rounded bg-[#f5e9da] border border-[#a1887f] focus:outline-none focus:ring-2 focus:ring-[#a1887f] text-[#3e2723] placeholder-[#a1887f]" />
+        </div>
+        <textarea name="message" placeholder="Message" required rows="4" class="w-full px-4 py-3 rounded bg-[#f5e9da] border border-[#a1887f] focus:outline-none focus:ring-2 focus:ring-[#a1887f] text-[#3e2723] placeholder-[#a1887f]"></textarea>
+        <button type="submit" class="w-full py-3 rounded bg-[#3e2723] text-[#fdf6ee] font-bold text-lg transition-transform duration-200 transform hover:scale-105 hover:bg-[#5d4037] focus:outline-none">Send</button>
+      </form>
+      <div id="contact-success" class="hidden mt-4 text-green-700 font-semibold text-center">Thank you! We'll be in touch soon.</div>
+    </section>
+    <!-- Footer -->
+    <footer class="text-center py-8 px-4 text-[#a1887f] text-sm fade-in">
+      <div>Swagsearch is in development.<br>Made by people who thrift too much. Built by hand.</div>
+      <div class="mt-2">© 2025 Swagsearch. All rights flipped.</div>
+    </footer>
+    <script>
+      // Typewriter animation for hero
+      const heroLines = [
+        "Real people. Real steals.",
+        "We don’t thrift for trends. We thrift for truth.",
+        "Find what no one else is looking for — until they are."
+      ];
+      let heroIndex = 0;
+      let charIndex = 0;
+      const heroEl = document.getElementById('hero-animated');
+      function typeLine() {
+        if (!heroEl) return;
+        const line = heroLines[heroIndex];
+        heroEl.textContent = line.slice(0, charIndex);
+        charIndex++;
+        if (charIndex <= line.length) {
+          setTimeout(typeLine, 40);
+        } else {
+          setTimeout(() => {
+            charIndex = 0;
+            heroIndex = (heroIndex + 1) % heroLines.length;
+            setTimeout(typeLine, 1000);
+          }, 1200);
+        }
+      }
+      typeLine();
+      // Fade-in on scroll
+      function onScrollFadeIn() {
+        document.querySelectorAll('.fade-in').forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 60) {
+            el.classList.add('visible');
+          }
+        });
+      }
+      window.addEventListener('scroll', onScrollFadeIn);
+      window.addEventListener('DOMContentLoaded', onScrollFadeIn);
+      // Contact form mock
+      document.getElementById('contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        document.getElementById('contact-success').classList.remove('hidden');
+        this.reset();
+        setTimeout(() => {
+          document.getElementById('contact-success').classList.add('hidden');
+        }, 4000);
+      });
+    </script>
+  </body>
+</html> 
