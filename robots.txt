@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arnavbhairgond.github.io/sitemap.xml 
