@@ -38,25 +38,58 @@
         0%, 100% { border-color: #3e2723; }
         50% { border-color: transparent; }
       }
+      @keyframes fade-in {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes thinking {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+      }
+      .animate-fade-in {
+        animation: fade-in 0.6s ease-out forwards;
+      }
+      .animate-thinking {
+        animation: thinking 1.5s ease-in-out infinite;
+      }
+      .emoji-btn.active {
+        background-color: #3e2723;
+        color: #fdf6ee;
+        transform: scale(1.1);
+      }
+      .emoji-btn {
+        background-color: transparent;
+        color: #3e2723;
+      }
+      #finding-section, #buying-section {
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      }
+
     </style>
   </head>
   <body class="min-h-screen flex flex-col justify-between">
     <!-- Hero Section -->
     <section class="flex flex-col items-center justify-center min-h-[80vh] pt-20 pb-12 px-4">
       <h1 class="font-display text-6xl md:text-8xl font-bold mb-12 tracking-widest text-center uppercase">SWAGSEARCH</h1>
-      <h2 class="text-xl md:text-2xl font-light mb-8 text-center tracking-wide">The internet’s best thrift finds — powered by you.</h2>
+      <h2 class="text-xl md:text-2xl font-light mb-8 text-center tracking-wide">The internet's best thrift finds — powered by you.</h2>
       <p id="hero-animated" class="typewriter text-lg md:text-xl text-center mt-4 mb-10 font-light" style="min-height:2.5em;"></p>
+      
+      <!-- Navigation Buttons -->
+      <div class="flex flex-col md:flex-row gap-6 mt-8">
+        <button id="buying-btn" class="px-8 py-4 bg-[#3e2723] text-[#fdf6ee] font-semibold text-lg rounded-lg transition-all duration-300 hover:bg-[#5d4037] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#a1887f]">
+          I'm a Buyer
+        </button>
+        <button id="finding-btn" class="px-8 py-4 border-2 border-[#3e2723] text-[#3e2723] font-semibold text-lg rounded-lg transition-all duration-300 hover:bg-[#3e2723] hover:text-[#fdf6ee] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#a1887f]">
+          I'm a Finder
+        </button>
+      </div>
     </section>
-    <!-- About Section -->
-    <section class="max-w-2xl mx-auto py-12 px-4 fade-in">
-      <h3 class="font-display text-2xl md:text-3xl font-bold mb-4">A curated chaos of secondhand brilliance.</h3>
-      <p class="text-lg mb-2">Swagsearch is a handpicked stream of the internet’s best secondhand fashion — found by real people with real taste.</p>
-      <p class="text-lg mb-2">No algorithms. No bots. Just finders: thrifters, stylists, vintage heads, and internet diggers who know how to spot gold before it sells.</p>
-      <p class="text-lg">We’re building the easiest way to share and discover the good stuff — before it disappears.</p>
-    </section>
-    <!-- How It Works Section -->
-    <section class="max-w-6xl mx-auto py-16 px-4 fade-in">
-      <h3 class="font-display text-3xl md:text-5xl font-bold mb-12 text-center">You find. We feature. They buy.</h3>
+
+    <!-- Finding Section -->
+    <section id="finding-section" class="max-w-6xl mx-auto py-16 px-4 fade-in">
+      <h3 class="font-display text-3xl md:text-5xl font-bold mb-20 text-center">You find. We feature. They buy.</h3>
       <div class="grid md:grid-cols-3 gap-12">
         <div class="text-center">
           <div class="text-6xl mb-4">🕵️‍♂️</div>
@@ -75,14 +108,82 @@
         </div>
       </div>
     </section>
-    <!-- Demo Section -->
-    <section class="max-w-2xl mx-auto py-12 px-4 fade-in">
-      <h3 class="font-display text-2xl md:text-3xl font-bold mb-4">Coming soon — but you can sneak a look.</h3>
-      <div class="w-full aspect-video bg-[#eaddcf] rounded-lg flex items-center justify-center mb-4">
-        <span class="text-[#a1887f] text-lg">[Video demo coming soon]</span>
+
+    <!-- Buying Section -->
+    <section id="buying-section" class="max-w-6xl mx-auto pt-8 pb-16 px-4 fade-in hidden">
+      <h3 class="font-display text-3xl md:text-5xl font-bold mb-20 text-center">Discover. Unlock. Own.</h3>
+      <div class="grid md:grid-cols-3 gap-12 mb-16">
+        <div class="text-center">
+          <div class="text-6xl mb-4">🔍</div>
+          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Discover curated finds</h4>
+          <p class="text-xl md:text-2xl">Browse handpicked secondhand fashion from real people with real taste.</p>
+        </div>
+        <div class="text-center">
+          <div class="text-6xl mb-4">🔓</div>
+          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Unlock the listing</h4>
+          <p class="text-xl md:text-2xl">Get the direct link to purchase from the original seller.</p>
+        </div>
+        <div class="text-center">
+          <div class="text-6xl mb-4">✨</div>
+          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Own your style</h4>
+          <p class="text-xl md:text-2xl">Buy directly from the source and support the finder who discovered it.</p>
+        </div>
       </div>
-      <p class="text-center text-base">Watch a quick preview of how Swagsearch works in real time. The full experience is coming.</p>
+      
+      <!-- Advanced Categorization Section -->
+      <div class="max-w-6xl mx-auto">
+        <h4 class="font-display text-2xl md:text-3xl font-bold mb-8 text-center">AI-Powered Precision</h4>
+        <div class="grid md:grid-cols-2 gap-12 items-start">
+          <div>
+            <div class="flex items-center justify-between mb-8">
+              <h5 class="font-bold text-2xl">Ultra-Niche Categorization</h5>
+              <div class="flex gap-4">
+                <button class="emoji-btn active text-2xl p-3 rounded-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#a1887f]" data-category="tees">👕</button>
+                <button class="emoji-btn text-2xl p-3 rounded-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#a1887f]" data-category="jeans">👖</button>
+                <button class="emoji-btn text-2xl p-3 rounded-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#a1887f]" data-category="jackets">🧥</button>
+                <button class="emoji-btn text-2xl p-3 rounded-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#a1887f]" data-category="shoes">👟</button>
+              </div>
+            </div>
+            <p class="text-lg mb-4">Forget generic "vintage" or "streetwear" tags. Our AI analyzes every detail:</p>
+            <ul id="category-details" class="text-lg space-y-2 mb-6 transition-all duration-500">
+              <li>• <strong>Construction:</strong> Single stitch, double stitch, chain stitch, selvedge denim</li>
+              <li>• <strong>Fabric Details:</strong> Slub cotton, heavyweight tees, loopwheel, pique knit</li>
+              <li>• <strong>Vintage Markers:</strong> Sun faded, vintage wash, acid wash, stone wash</li>
+              <li>• <strong>Fit & Silhouette:</strong> Cropped tees, oversized fits, boxy cuts, drop shoulders</li>
+              <li>• <strong>Condition & Rarity:</strong> Deadstock, one-of-one, limited releases, sample pieces</li>
+            </ul>
+            <p class="text-lg">Describe what you want in plain English. Our AI finds the exact match from thousands of listings, ensuring you get the best possible price our finders can discover.</p>
+          </div>
+          
+          <!-- AI Chatbot Demo -->
+          <div class="bg-[#f5e9da] rounded-lg p-6 border border-[#a1887f]">
+            <div class="flex items-center mb-4">
+              <div class="text-2xl mr-3">🤖</div>
+              <h5 class="font-semibold text-lg">Swagsearch AI Assistant</h5>
+            </div>
+            <div id="chat-container" class="h-64 overflow-y-auto mb-4 space-y-4 px-2">
+              <div class="bg-[#eaddcf] rounded-2xl rounded-tl-md p-3 text-sm max-w-[85%] ml-0 opacity-0 transform translate-y-2 animate-fade-in">
+                <strong>AI:</strong> Hi! I'm here to help you find exactly what you're looking for. Just describe the item and I'll categorize it perfectly.
+              </div>
+            </div>
+            <div class="flex items-center">
+              <input type="text" id="chat-input" placeholder="Describe what you're looking for..." class="flex-1 px-3 py-2 rounded-l border border-[#a1887f] bg-gray-100 text-gray-500 text-sm focus:outline-none cursor-not-allowed" disabled>
+              <button id="chat-send" class="px-4 py-2 bg-gray-300 text-gray-500 rounded-r text-sm cursor-not-allowed" disabled>Send</button>
+            </div>
+            <div class="text-xs text-[#a1887f] mt-2">Demo: Auto-cycling through example queries</div>
+          </div>
+        </div>
+      </div>
     </section>
+
+    <!-- About Section -->
+    <section class="max-w-2xl mx-auto py-12 px-4 fade-in">
+      <h3 class="font-display text-2xl md:text-3xl font-bold mb-4">A curated chaos of secondhand brilliance.</h3>
+      <p class="text-lg mb-2">Swagsearch is a handpicked stream of the internet's best secondhand fashion — found by real people with real taste.</p>
+      <p class="text-lg mb-2">No algorithms. No bots. Just finders: thrifters, stylists, vintage heads, and internet diggers who know how to spot gold before it sells.</p>
+      <p class="text-lg">We're building the easiest way to share and discover the good stuff — before it disappears.</p>
+    </section>
+
     <!-- Contact Section -->
     <section class="max-w-xl mx-auto py-12 px-4 fade-in">
       <h3 class="font-display text-2xl md:text-3xl font-bold mb-4">Want in early?</h3>
@@ -179,18 +280,288 @@
       });
       // Store cycler for 'How It Works' section
       const stores = [
-        "Depop", "eBay", "Mercari", "Vinted", "Poshmark", "thredUP", "Grailed", "The RealReal", "Vestiaire Collective", "Heroine", "Tradesy", "Kidizen", "Rebelle", "Flyp", "Curtsy"
+        { name: "Depop", color: "#FF2300" },
+        { name: "eBay", color: "#86b817" },
+        { name: "Mercari", color: "#5E6DF2" },
+        { name: "Vinted", color: "#007782" },
+        { name: "Poshmark", color: "#7F0353" },
+        { name: "thredUP", color: "#31D8A5" },
+        { name: "Grailed", color: "#000000" },
+        { name: "The RealReal", color: "#1a1a1a" },
+        { name: "Vestiaire Collective", color: "#FF5928" }
       ];
       const storeCycler = document.getElementById('store-cycler');
       let storeIndex = 0;
       function cycleStore() {
         if (!storeCycler) return;
         const store = stores[storeIndex];
-        storeCycler.innerHTML = `You're already scrolling <span class="font-bold">${store}</span>. Might as well save a gem.`;
+        
+        // Special handling for eBay with multi-color letters
+        if (store.name === "eBay") {
+          const ebayColors = ["#E53238", "#0064D2", "#F5AF02", "#86B817"]; // Red, Blue, Yellow, Green
+          const coloredLetters = store.name.split('').map((letter, index) => 
+            `<span class="font-bold" style="color: ${ebayColors[index % ebayColors.length]}">${letter}</span>`
+          ).join('');
+          storeCycler.innerHTML = `You're already scrolling<br><span class="font-bold">${coloredLetters}</span>.<br>Might as well save a gem.`;
+        } else {
+          storeCycler.innerHTML = `You're already scrolling<br><span class="font-bold" style="color: ${store.color}">${store.name}</span>.<br>Might as well save a gem.`;
+        }
+        
         storeIndex = (storeIndex + 1) % stores.length;
         setTimeout(cycleStore, 2000 + Math.random() * 1000);
       }
       cycleStore();
+      
+      // Navigation between Finding and Buying sections
+      const findingBtn = document.getElementById('finding-btn');
+      const buyingBtn = document.getElementById('buying-btn');
+      const findingSection = document.getElementById('finding-section');
+      const buyingSection = document.getElementById('buying-section');
+      
+      function showFinding() {
+        // Fade out buying section
+        buyingSection.style.opacity = '0';
+        buyingSection.style.transform = 'translateX(20px)';
+        
+        setTimeout(() => {
+          buyingSection.classList.add('hidden');
+          findingSection.classList.remove('hidden');
+          
+          // Fade in finding section
+          findingSection.style.opacity = '0';
+          findingSection.style.transform = 'translateX(-20px)';
+          
+          setTimeout(() => {
+            findingSection.style.opacity = '1';
+            findingSection.style.transform = 'translateX(0)';
+          }, 50);
+        }, 300);
+        
+        // Update button states
+        findingBtn.classList.add('bg-[#3e2723]', 'text-[#fdf6ee]');
+        findingBtn.classList.remove('border-2', 'border-[#3e2723]', 'text-[#3e2723]');
+        buyingBtn.classList.remove('bg-[#3e2723]', 'text-[#fdf6ee]');
+        buyingBtn.classList.add('border-2', 'border-[#3e2723]', 'text-[#3e2723]');
+      }
+      
+      function showBuying() {
+        // Fade out finding section
+        findingSection.style.opacity = '0';
+        findingSection.style.transform = 'translateX(-20px)';
+        
+        setTimeout(() => {
+          findingSection.classList.add('hidden');
+          buyingSection.classList.remove('hidden');
+          
+          // Fade in buying section
+          buyingSection.style.opacity = '0';
+          buyingSection.style.transform = 'translateX(20px)';
+          
+          setTimeout(() => {
+            buyingSection.style.opacity = '1';
+            buyingSection.style.transform = 'translateX(0)';
+          }, 50);
+        }, 300);
+        
+        // Update button states
+        buyingBtn.classList.add('bg-[#3e2723]', 'text-[#fdf6ee]');
+        buyingBtn.classList.remove('border-2', 'border-[#3e2723]', 'text-[#3e2723]');
+        findingBtn.classList.remove('bg-[#3e2723]', 'text-[#fdf6ee]');
+        findingBtn.classList.add('border-2', 'border-[#3e2723]', 'text-[#3e2723]');
+      }
+      
+      findingBtn.addEventListener('click', showFinding);
+      buyingBtn.addEventListener('click', showBuying);
+      
+      // Show Buying section by default
+      showBuying();
+      
+      // AI Chatbot Demo
+      const chatQueries = [
+        {
+          query: "I want a vintage 90s oversized denim jacket",
+          response: "Found 3 matches! Categorized as: 90s grunge aesthetic, oversized fit, vintage denim, distressed wash. Price range: $45-120 from our top finders."
+        },
+        {
+          query: "Looking for deadstock Supreme box logo hoodie",
+          response: "Perfect! Found 2 deadstock Supreme box logo hoodies. Categorized as: streetwear, limited release, deadstock condition, 100% cotton. Our finders spotted these at $180-250."
+        },
+        {
+          query: "Need a Y2K cropped cardigan in pastel colors",
+          response: "Great choice! Found 5 Y2K cropped cardigans. Categorized as: Y2K aesthetic, cropped fit, pastel color palette, knit fabric. Price range: $25-65 from curated listings."
+        },
+        {
+          query: "Searching for vintage Nike Air Max 95s",
+          response: "Excellent! Found 8 vintage Nike Air Max 95s. Categorized as: 90s sneakers, vintage condition, OG colorways, deadstock options available. Our finders found these at $80-200."
+        },
+        {
+          query: "Want a one-of-one hand-painted denim jacket",
+          response: "Unique find! Located 2 one-of-one hand-painted denim jackets. Categorized as: custom art, one-of-one, hand-painted, vintage denim base. Price range: $120-300 from artist sellers."
+        },
+        {
+          query: "Looking for 70s disco era platform shoes",
+          response: "Groovy! Found 4 70s disco platform shoes. Categorized as: 70s disco aesthetic, platform sole, vintage condition, statement piece. Price range: $45-120 from vintage specialists."
+        },
+        {
+          query: "Need a cropped wide-leg trouser in earth tones",
+          response: "Perfect! Found 6 cropped wide-leg trousers. Categorized as: wide-leg fit, cropped length, earth tone palette, sustainable fabric options. Price range: $35-85 from eco-conscious finders."
+        },
+        {
+          query: "Searching for limited edition streetwear drops",
+          response: "Hot items! Found 12 limited edition drops. Categorized as: limited release, streetwear, hyped items, deadstock condition. Price range: $150-500 from early access finders."
+        },
+        {
+          query: "Want vintage Levi's 501s with perfect fade",
+          response: "Classic! Found 7 vintage Levi's 501s. Categorized as: vintage denim, perfect fade, 501 cut, selvedge options. Price range: $60-180 from denim experts."
+        },
+        {
+          query: "Looking for sustainable fashion from small brands",
+          response: "Eco-friendly finds! Located 15 sustainable pieces. Categorized as: sustainable fashion, small brands, eco-friendly materials, ethical production. Price range: $40-120 from conscious finders."
+        }
+      ];
+      
+      let queryIndex = 0;
+      const chatContainer = document.getElementById('chat-container');
+      
+      function addMessage(message, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `bg-${isUser ? '[#3e2723] text-white' : '[#eaddcf]'} rounded-2xl ${isUser ? 'rounded-tr-md ml-auto' : 'rounded-tl-md ml-0'} p-3 text-sm max-w-[85%] opacity-0 transform translate-y-2`;
+        messageDiv.innerHTML = `<strong>${isUser ? 'You' : 'AI'}:</strong> ${message}`;
+        chatContainer.appendChild(messageDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        
+        // Animate in
+        setTimeout(() => {
+          messageDiv.classList.add('animate-fade-in');
+        }, 100);
+      }
+      
+      function addThinkingIndicator() {
+        const thinkingDiv = document.createElement('div');
+        thinkingDiv.className = 'bg-[#eaddcf] rounded-2xl rounded-tl-md p-3 text-sm max-w-[85%] ml-0 animate-thinking';
+        thinkingDiv.innerHTML = '<strong>AI:</strong> <span class="inline-block">Thinking</span><span class="dots">...</span>';
+        chatContainer.appendChild(thinkingDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        return thinkingDiv;
+      }
+      
+      function cycleChatQueries() {
+        if (queryIndex >= chatQueries.length) {
+          queryIndex = 0;
+        }
+        
+        const currentQuery = chatQueries[queryIndex];
+        
+        // Add user query
+        setTimeout(() => {
+          addMessage(currentQuery.query, true);
+        }, 2000);
+        
+        // Add thinking indicator
+        setTimeout(() => {
+          const thinkingIndicator = addThinkingIndicator();
+          
+          // Remove thinking indicator and add AI response
+          setTimeout(() => {
+            thinkingIndicator.remove();
+            addMessage(currentQuery.response);
+          }, 2000);
+        }, 3000);
+        
+        queryIndex++;
+        
+        // Schedule next query (longer delay for more natural feel)
+        setTimeout(cycleChatQueries, 8000);
+      }
+      
+      // Start the demo when buying section is shown
+      function startChatDemo() {
+        if (document.getElementById('buying-section').classList.contains('hidden')) {
+          return;
+        }
+        setTimeout(cycleChatQueries, 2000);
+      }
+      
+      // Start demo when page loads and when switching to buying section
+      document.addEventListener('DOMContentLoaded', startChatDemo);
+      buyingBtn.addEventListener('click', () => {
+        setTimeout(startChatDemo, 500);
+      });
+      
+      // Interactive Category Buttons
+      const categoryDetails = {
+        tees: {
+          construction: "Single stitch, double stitch, chain stitch, selvedge hems",
+          fabric: "Slub cotton, heavyweight tees, loopwheel, pique knit",
+          vintage: "Sun faded, vintage wash, acid wash, stone wash",
+          fit: "Cropped tees, oversized fits, boxy cuts, drop shoulders",
+          condition: "Deadstock, one-of-one, limited releases, sample pieces"
+        },
+        jeans: {
+          construction: "Selvedge denim, chain stitch, single needle, flat felled seams",
+          fabric: "Raw denim, heavyweight, slub texture, vintage weight",
+          vintage: "Vintage wash, sun faded, whiskering, honeycombs",
+          fit: "Straight leg, bootcut, wide leg, high rise, low rise",
+          condition: "Deadstock, vintage condition, limited runs, sample pairs"
+        },
+        jackets: {
+          construction: "Chain stitch embroidery, single needle, vintage zippers",
+          fabric: "Heavyweight cotton, wool blend, vintage nylon, leather",
+          vintage: "Vintage wash, sun faded, patina, vintage hardware",
+          fit: "Oversized, cropped, boxy cuts, drop shoulders, vintage sizing",
+          condition: "Deadstock, vintage condition, limited releases, sample pieces"
+        },
+        shoes: {
+          construction: "Vintage soles, original stitching, vintage materials",
+          fabric: "Leather, suede, canvas, vintage mesh, premium materials",
+          vintage: "Vintage condition, sun faded, patina, original laces",
+          fit: "Vintage sizing, wide fit, narrow fit, original insoles",
+          condition: "Deadstock, vintage condition, limited releases, sample pairs"
+        }
+      };
+      
+      function updateCategoryDetails(category) {
+        const details = categoryDetails[category];
+        const container = document.getElementById('category-details');
+        
+        // Fade out
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(10px)';
+        
+        setTimeout(() => {
+          container.innerHTML = `
+            <li>• <strong>Construction:</strong> ${details.construction}</li>
+            <li>• <strong>Fabric Details:</strong> ${details.fabric}</li>
+            <li>• <strong>Vintage Markers:</strong> ${details.vintage}</li>
+            <li>• <strong>Fit & Silhouette:</strong> ${details.fit}</li>
+            <li>• <strong>Condition & Rarity:</strong> ${details.condition}</li>
+          `;
+          
+          // Fade in
+          container.style.opacity = '1';
+          container.style.transform = 'translateY(0)';
+        }, 250);
+      }
+      
+      function handleCategoryClick(category) {
+        // Update button states
+        document.querySelectorAll('.emoji-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        
+        // Update category details
+        updateCategoryDetails(category);
+      }
+      
+      // Add event listeners to emoji buttons
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.emoji-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            handleCategoryClick(e.target.dataset.category);
+          });
+        });
+      });
     </script>
   </body>
 </html> 
