@@ -43,7 +43,7 @@
   <body class="min-h-screen flex flex-col justify-between">
     <!-- Hero Section -->
     <section class="flex flex-col items-center justify-center min-h-[80vh] pt-20 pb-12 px-4">
-      <h1 class="font-display text-5xl md:text-7xl font-light mb-12 tracking-widest text-center uppercase">SWAGSEARCH</h1>
+      <h1 class="font-display text-6xl md:text-8xl font-bold mb-12 tracking-widest text-center uppercase">SWAGSEARCH</h1>
       <h2 class="text-xl md:text-2xl font-light mb-8 text-center tracking-wide">The internet’s best thrift finds — powered by you.</h2>
       <p id="hero-animated" class="typewriter text-lg md:text-xl text-center mt-4 mb-10 font-light" style="min-height:2.5em;"></p>
     </section>
@@ -55,23 +55,23 @@
       <p class="text-lg">We’re building the easiest way to share and discover the good stuff — before it disappears.</p>
     </section>
     <!-- How It Works Section -->
-    <section class="max-w-5xl mx-auto py-12 px-4 fade-in">
-      <h3 class="font-display text-2xl md:text-3xl font-bold mb-8 text-center">You find. We feature. They buy.</h3>
-      <div class="grid md:grid-cols-3 gap-8">
+    <section class="max-w-6xl mx-auto py-16 px-4 fade-in">
+      <h3 class="font-display text-3xl md:text-5xl font-bold mb-12 text-center">You find. We feature. They buy.</h3>
+      <div class="grid md:grid-cols-3 gap-12">
         <div class="text-center">
-          <div class="text-4xl mb-2">🕵️‍♂️</div>
-          <h4 class="font-semibold mb-2">Find something sick online</h4>
-          <p class="text-base">You’re already scrolling Depop. Might as well save a gem.</p>
+          <div class="text-6xl mb-4">🕵️‍♂️</div>
+          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Find something sick online</h4>
+          <p class="text-xl md:text-2xl" id="store-cycler">You're already scrolling Depop. Might as well save a gem.</p>
         </div>
         <div class="text-center">
-          <div class="text-4xl mb-2">📤</div>
-          <h4 class="font-semibold mb-2">Send it with one click</h4>
-          <p class="text-base">Our browser extension lets you push listings to Swagsearch instantly.</p>
+          <div class="text-6xl mb-4">📤</div>
+          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Send it with one click</h4>
+          <p class="text-xl md:text-2xl">Our browser extension lets you push listings to Swagsearch instantly.</p>
         </div>
         <div class="text-center">
-          <div class="text-4xl mb-2">💸</div>
-          <h4 class="font-semibold mb-2">Get paid when someone buys</h4>
-          <p class="text-base">When a listing you found is unlocked, you get a cut. Simple.</p>
+          <div class="text-6xl mb-4">💸</div>
+          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Get paid when someone buys</h4>
+          <p class="text-xl md:text-2xl">When a listing you found is unlocked, you get a cut. Simple.</p>
         </div>
       </div>
     </section>
@@ -177,6 +177,20 @@
           document.getElementById('contact-success').classList.add('hidden');
         }, 4000);
       });
+      // Store cycler for 'How It Works' section
+      const stores = [
+        "Depop", "eBay", "Mercari", "Vinted", "Poshmark", "thredUP", "Grailed", "The RealReal", "Vestiaire Collective", "Heroine", "Tradesy", "Kidizen", "Rebelle", "Flyp", "Curtsy"
+      ];
+      const storeCycler = document.getElementById('store-cycler');
+      let storeIndex = 0;
+      function cycleStore() {
+        if (!storeCycler) return;
+        const store = stores[storeIndex];
+        storeCycler.innerHTML = `You're already scrolling <span class="font-bold">${store}</span>. Might as well save a gem.`;
+        storeIndex = (storeIndex + 1) % stores.length;
+        setTimeout(cycleStore, 2000 + Math.random() * 1000);
+      }
+      cycleStore();
     </script>
   </body>
 </html> 
