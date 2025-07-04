@@ -6,9 +6,15 @@ Summary of Work:
 - Guided through Google Search Console verification and sitemap submission
 - Provided troubleshooting for sitemap and verification issues
 - Provided project folder path and domain info
+- Added invisible SEO keywords from seos.txt to index.html for crawlers
+- Fixed AI assistant demo so fake user queries always show up
+- Added custom scrollbar styling for chat box and entire site (brown/cream theme, thicker/darker)
+- Made all AI assistant chat text non-interactive and unselectable
+- Served the site locally with Python HTTP server for testing
 
 Notes:
 - Awaiting GitHub Pages propagation for sitemap.xml
 - Google Search Console verification tag added to HTML
 - Project folder: C:\Users\SeaBiscuit\Documents\GitHub\arnavbhairgond.github.io
-- Live site: https://arnavbhairgond.github.io/ 
+- Live site: https://arnavbhairgond.github.io/
+- Localhost: http://localhost:8000/ 
