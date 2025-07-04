@@ -82,6 +82,42 @@
       #finding-section, #buying-section {
         transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
       }
+      #chat-container {
+        scrollbar-width: thick; /* For Firefox */
+        scrollbar-color: #5d4037 #f5e9da; /* darker brown thumb, cream track */
+      }
+      #chat-container::-webkit-scrollbar {
+        width: 14px;
+        background: #f5e9da;
+      }
+      #chat-container::-webkit-scrollbar-thumb {
+        background: #5d4037;
+        border-radius: 8px;
+        border: 3px solid #f5e9da;
+      }
+      #chat-container::-webkit-scrollbar-thumb:hover {
+        background: #3e2723;
+      }
+      html {
+        scrollbar-width: thick; /* For Firefox */
+        scrollbar-color: #5d4037 #f5e9da; /* darker brown thumb, cream track */
+      }
+      html::-webkit-scrollbar {
+        width: 18px;
+        background: #f5e9da;
+      }
+      html::-webkit-scrollbar-thumb {
+        background: #5d4037;
+        border-radius: 10px;
+        border: 4px solid #f5e9da;
+      }
+      html::-webkit-scrollbar-thumb:hover {
+        background: #3e2723;
+      }
+      #chat-container div, #chat-container strong, #chat-container span {
+        user-select: none;
+        pointer-events: none;
+      }
 
     </style>
   </head>
@@ -490,11 +526,10 @@
         setTimeout(cycleChatQueries, 8000);
       }
       
-      // Start the demo when buying section is shown
       function startChatDemo() {
-        if (document.getElementById('buying-section').classList.contains('hidden')) {
-          return;
-        }
+        // Always clear chat and start demo regardless of section visibility
+        chatContainer.innerHTML = '';
+        queryIndex = 0;
         setTimeout(cycleChatQueries, 2000);
       }
       
