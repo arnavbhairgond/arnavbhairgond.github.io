@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Swagsearch</title>
-    <meta name="description" content="Swagsearch – The internet’s best thrift finds, powered by real people. Curated secondhand fashion, found by finders." />
+    <meta name="description" content="Swagsearch – The internet's best thrift finds, powered by real people. Curated secondhand fashion, found by finders." />
     <meta name="keywords" content="thrift finds, secondhand fashion, vintage clothing, curated fashion, thrift shopping, sustainable fashion, vintage tees, streetwear" />
     <meta name="author" content="Swagsearch" />
     <link rel="canonical" href="https://arnavbhairgond.github.io/" />
@@ -21,257 +21,402 @@
     <meta property="twitter:description" content="The internet's best thrift finds, powered by real people. Curated secondhand fashion, found by finders." />
     <meta property="twitter:image" content="https://arnavbhairgond.github.io/og-image.jpg" />
     <meta name="google-site-verification" content="J-pjilmFjqQv2Vx_mg4bSSLn1KNr1pmIDZPCbjixNJw" />
-    <link rel="icon" href="favicon.png" type="image/png" />
-    <link rel="shortcut icon" href="favicon.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Favicon with dark mode support -->
+    <link rel="icon" href="swagsearchlogo.svg" type="image/svg+xml" id="favicon" />
+    <link rel="shortcut icon" href="swagsearchlogo.svg" />
+    <link rel="apple-touch-icon" href="swagsearchlogo.svg" />
+    
+    <script>
+      // Update favicon based on color scheme using SVG data URI
+      function updateFavicon() {
+        const favicon = document.getElementById('favicon');
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (favicon) {
+          // Fetch the SVG and modify it based on color scheme
+          fetch('swagsearchlogo.svg')
+            .then(response => response.text())
+            .then(svg => {
+              // For dark mode: make it white, for light mode: make it green/black
+              let modifiedSvg = svg;
+              if (isDark) {
+                // Replace fill colors with white
+                modifiedSvg = modifiedSvg.replace(/fill="[^"]*"/g, 'fill="white"');
+                modifiedSvg = modifiedSvg.replace(/fill='[^']*'/g, "fill='white'");
+                modifiedSvg = modifiedSvg.replace(/fill:#[^;]*/g, 'fill:white');
+              } else {
+                // For light mode, use green color (#6b8e23) or keep original
+                modifiedSvg = modifiedSvg.replace(/fill="[^"]*"/g, 'fill="#6b8e23"');
+                modifiedSvg = modifiedSvg.replace(/fill='[^']*'/g, "fill='#6b8e23'");
+                modifiedSvg = modifiedSvg.replace(/fill:#[^;]*/g, 'fill:#6b8e23');
+              }
+              
+              const blob = new Blob([modifiedSvg], { type: 'image/svg+xml' });
+              const url = URL.createObjectURL(blob);
+              favicon.href = url;
+            })
+            .catch(() => {
+              // Fallback to original if fetch fails
+              favicon.href = 'swagsearchlogo.svg';
+            });
+        }
+      }
+      
+      // Update on load and when color scheme changes
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
+      }
+      updateFavicon();
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+      :root {
+        --primary: #2d5016;
+        --secondary: #6b8e23;
+        --accent: #5a7a1f;
+        --bg: #ffffff;
+        --bg-alt: #f8f9fa;
+        --text: #1a1a1a;
+        --text-light: #666666;
+        --border: #e5e5e5;
+        --gradient: linear-gradient(135deg, #6b8e23 0%, #4a6b1a 100%);
+        --gradient-alt: linear-gradient(135deg, #7ba02a 0%, #5a7a1f 100%);
+        --earth-green: #6b8e23;
+        --earth-green-light: #8fb03d;
+        --earth-green-dark: #4a6b1a;
+        --earth-green-darker: #2d5016;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
         font-family: 'Inter', sans-serif;
-        background: #fdf6ee;
-        color: #3e2723;
-        /* Prevent horizontal scroll on mobile */
+        background: var(--bg);
+        color: var(--text);
         overflow-x: hidden;
-        /* Improve touch targets */
         -webkit-tap-highlight-color: transparent;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
       }
+
+      html {
+        margin: 0;
+        padding: 0;
+      }
+
       .font-display {
         font-family: 'Space Grotesk', sans-serif;
-        font-weight: 300;
-        letter-spacing: 0.1em;
+        font-weight: 700;
+        letter-spacing: -0.02em;
       }
+
+      /* Smooth animations */
       .fade-in {
         opacity: 0;
-        transform: translateY(24px);
-        transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+        transform: translateY(30px);
+        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       }
+
       .fade-in.visible {
         opacity: 1;
-        transform: none;
+        transform: translateY(0);
       }
+
+      /* Typewriter effect */
       .typewriter {
         display: inline-block;
-        border-right: 2px solid #3e2723;
+        position: relative;
         white-space: nowrap;
         overflow: hidden;
+      }
+
+      .typewriter::after {
+        content: '';
+        display: inline-block;
+        width: 2px;
+        height: 1.2em;
+        background-color: var(--earth-green);
+        margin-left: 4px;
+        vertical-align: middle;
         animation: blink-caret 0.75s step-end infinite;
       }
+
       @keyframes blink-caret {
-        0%, 100% { border-color: #3e2723; }
-        50% { border-color: transparent; }
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
       }
+
       @keyframes fade-in {
         to {
           opacity: 1;
           transform: translateY(0);
         }
       }
+
       @keyframes thinking {
-        0%, 100% { opacity: 0.3; }
+        0%, 100% { opacity: 0.4; }
         50% { opacity: 1; }
       }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      @keyframes rotate-jacket {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+      }
+
+      @keyframes rotate-jeans {
+        from { transform: translate(50%, 50%) rotate(0deg); }
+        to { transform: translate(50%, 50%) rotate(360deg); }
+      }
+
       .animate-fade-in {
         animation: fade-in 0.6s ease-out forwards;
       }
+
       .animate-thinking {
         animation: thinking 1.5s ease-in-out infinite;
       }
+
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* Modern buttons */
+      .btn-primary {
+        background: var(--primary);
+        color: #f5f7f0;
+        padding: 22px 48px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 20px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: left 0.5s;
+      }
+
+      .btn-primary:hover::before {
+        left: 100%;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(45, 80, 22, 0.4);
+        background: var(--secondary);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--primary);
+        padding: 22px 48px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 20px;
+        border: 2px solid var(--primary);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+      }
+
+      .btn-secondary:hover {
+        background: var(--primary);
+        color: #f5f7f0;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(45, 80, 22, 0.4);
+      }
+
+      .btn-active {
+        background: var(--primary);
+        color: #f5f7f0;
+      }
+
+      /* Card styles */
+      .card {
+        background: white;
+        border-radius: 20px;
+        padding: 28px;
+        box-shadow: 0 4px 6px -1px rgba(45, 80, 22, 0.08), 0 2px 4px -1px rgba(45, 80, 22, 0.05);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(107, 142, 35, 0.05), transparent);
+        transition: left 0.6s ease;
+      }
+
+      .card:hover::before {
+        left: 100%;
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 25px -5px rgba(45, 80, 22, 0.15), 0 10px 10px -5px rgba(45, 80, 22, 0.1);
+        border-color: rgba(107, 142, 35, 0.3);
+      }
+
+      /* Card grid with smooth transitions */
+      .card-grid {
+        display: grid;
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .card-grid .card {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: cardFadeIn 0.6s ease-out forwards;
+      }
+
+      .card-grid .card:nth-child(1) { animation-delay: 0.1s; }
+      .card-grid .card:nth-child(2) { animation-delay: 0.2s; }
+      .card-grid .card:nth-child(3) { animation-delay: 0.3s; }
+
+      @keyframes cardFadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(107, 142, 35, 0.05), transparent);
+        transition: left 0.6s ease;
+      }
+
+      .card:hover::before {
+        left: 100%;
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 25px -5px rgba(45, 80, 22, 0.15), 0 10px 10px -5px rgba(45, 80, 22, 0.1);
+        border-color: rgba(107, 142, 35, 0.3);
+      }
+
+      /* Card grid with smooth transitions */
+      .card-grid {
+        display: grid;
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .card-grid .card {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: cardFadeIn 0.6s ease-out forwards;
+      }
+
+      .card-grid .card:nth-child(1) { animation-delay: 0.1s; }
+      .card-grid .card:nth-child(2) { animation-delay: 0.2s; }
+      .card-grid .card:nth-child(3) { animation-delay: 0.3s; }
+
+      @keyframes cardFadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Emoji buttons */
+      .emoji-btn {
+        background: var(--bg-alt);
+        border: 2px solid var(--border);
+        border-radius: 16px;
+        padding: 16px;
+        font-size: 32px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .emoji-btn:hover {
+        transform: scale(1.1);
+        border-color: var(--earth-green);
+        background: white;
+      }
+
       .emoji-btn.active {
-        background-color: #3e2723;
-        color: #fdf6ee;
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #f5f7f0;
         transform: scale(1.1);
       }
-      .emoji-btn {
-        background-color: transparent;
-        color: #3e2723;
-      }
+
+      /* Section transitions */
       #finding-section, #buying-section {
-        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
+
+      /* Chat container */
       #chat-container {
-        scrollbar-width: thick; /* For Firefox */
-        scrollbar-color: #5d4037 #f5e9da; /* darker brown thumb, cream track */
+        scrollbar-width: thin;
+        scrollbar-color: var(--earth-green) var(--bg-alt);
       }
+
       #chat-container::-webkit-scrollbar {
-        width: 14px;
-        background: #f5e9da;
+        width: 8px;
+        background: var(--bg-alt);
       }
+
       #chat-container::-webkit-scrollbar-thumb {
-        background: #5d4037;
-        border-radius: 8px;
-        border: 3px solid #f5e9da;
+        background: var(--earth-green);
+        border-radius: 4px;
       }
+
       #chat-container::-webkit-scrollbar-thumb:hover {
-        background: #3e2723;
-      }
-      html {
-        scrollbar-width: thick; /* For Firefox */
-        scrollbar-color: #5d4037 #f5e9da; /* darker brown thumb, cream track */
-      }
-      html::-webkit-scrollbar {
-        width: 18px;
-        background: #f5e9da;
-      }
-      html::-webkit-scrollbar-thumb {
-        background: #5d4037;
-        border-radius: 10px;
-        border: 4px solid #f5e9da;
-      }
-      html::-webkit-scrollbar-thumb:hover {
-        background: #3e2723;
-      }
-      #chat-container div, #chat-container strong, #chat-container span {
-        user-select: none;
-        pointer-events: none;
+        background: var(--earth-brown);
       }
 
-      /* Mobile-specific improvements */
-      @media (max-width: 768px) {
-        /* Improve touch targets */
-        button, .emoji-btn {
-          min-height: 44px;
-          min-width: 44px;
-        }
-        
-        /* Better spacing for mobile */
-        .px-4 {
-          padding-left: 1rem;
-          padding-right: 1rem;
-        }
-        
-        /* Improve text readability on small screens */
-        .text-4xl {
-          font-size: 2rem;
-          line-height: 1.2;
-        }
-        
-        .text-5xl {
-          font-size: 2.5rem;
-          line-height: 1.2;
-        }
-        
-        .text-6xl {
-          font-size: 3rem;
-          line-height: 1.1;
-        }
-        
-        .text-8xl {
-          font-size: 4rem;
-          line-height: 1.1;
-        }
-        
-        /* Better emoji sizing for mobile */
-        .text-6xl.mb-4 {
-          font-size: 3rem;
-        }
-        
-        /* Improve form inputs on mobile */
-        input, textarea {
-          font-size: 16px; /* Prevents zoom on iOS */
-        }
-        
-        /* Better spacing for mobile sections */
-        .py-16 {
-          padding-top: 3rem;
-          padding-bottom: 3rem;
-        }
-        
-        .mb-20 {
-          margin-bottom: 3rem;
-        }
-        
-        /* Improve grid gaps on mobile */
-        .gap-12 {
-          gap: 2rem;
-        }
-        
-        /* Better button spacing */
-        .gap-6 {
-          gap: 1rem;
-        }
-        
-        /* Improve chat container height on mobile */
-        #chat-container {
-          height: 200px;
-        }
-        
-        /* Better emoji button layout on mobile */
-        .flex.gap-4 {
-          gap: 0.5rem;
-        }
-        
-        .emoji-btn {
-          padding: 0.5rem;
-          font-size: 1.5rem;
-        }
-      }
-      
-      /* Extra small devices */
-      @media (max-width: 480px) {
-        .text-4xl {
-          font-size: 1.75rem;
-        }
-        
-        .text-5xl {
-          font-size: 2rem;
-        }
-        
-        .text-6xl {
-          font-size: 2.25rem;
-        }
-        
-        .text-8xl {
-          font-size: 2.75rem;
-        }
-        
-        .text-6xl.mb-4 {
-          font-size: 2.5rem;
-        }
-        
-        .px-4 {
-          padding-left: 0.75rem;
-          padding-right: 0.75rem;
-        }
-        
-        /* Stack emoji buttons vertically on very small screens */
-        .flex.gap-4 {
-          flex-direction: column;
-          gap: 0.25rem;
-        }
-      }
-      
-      /* Prevent text overflow on mobile */
-      .typewriter {
-        word-wrap: break-word;
-        white-space: normal;
-      }
-      
-      /* Improve focus states for accessibility */
-      button:focus, input:focus, textarea:focus {
-        outline: 2px solid #a1887f;
-        outline-offset: 2px;
-      }
-      
-      /* Disable hover effects on touch devices */
-      @media (hover: none) {
-        .hover\:scale-105:hover {
-          transform: none;
-        }
-        
-        .hover\:bg-\[#5d4037\]:hover {
-          background-color: #3e2723;
-        }
-        
-        .hover\:text-\[#fdf6ee\]:hover {
-          color: #3e2723;
-        }
-      }
-
-      /* Custom Video Player Styles */
+      /* Video player styles */
       #volume-slider {
         -webkit-appearance: none;
         appearance: none;
-        background: #a1887f;
+        background: var(--border);
         border-radius: 5px;
         outline: none;
         height: 4px;
@@ -283,9 +428,9 @@
         width: 16px;
         height: 16px;
         border-radius: 50%;
-        background: #fdf6ee;
+        background: white;
         cursor: pointer;
-        border: 2px solid #3e2723;
+        border: 2px solid var(--earth-green);
         box-shadow: 0 2px 4px rgba(0,0,0,0.2);
       }
 
@@ -293,139 +438,437 @@
         width: 16px;
         height: 16px;
         border-radius: 50%;
-        background: #fdf6ee;
+        background: white;
         cursor: pointer;
-        border: 2px solid #3e2723;
+        border: 2px solid var(--earth-green);
         box-shadow: 0 2px 4px rgba(0,0,0,0.2);
       }
 
       #progress-container {
         cursor: pointer;
         height: 6px;
-        background: rgba(0,0,0,0.3);
+        background: rgba(0,0,0,0.2);
         border-radius: 3px;
       }
 
       #progress-bar {
-        background: linear-gradient(90deg, #3e2723 0%, #5d4037 100%);
+        background: var(--gradient);
         border-radius: 3px;
         transition: all 0.1s ease;
+        height: 100%;
       }
 
       #progress-container:hover #progress-bar {
-        background: linear-gradient(90deg, #5d4037 0%, #a1887f 100%);
         height: 8px;
         margin-top: -1px;
       }
 
       #play-button {
-        backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px rgba(62, 39, 35, 0.3);
-        border: 2px solid rgba(253, 246, 238, 0.2);
+        backdrop-filter: blur(20px);
+        background: rgba(0,0,0,0.7);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border: 2px solid rgba(255,255,255,0.2);
       }
 
       #play-button:hover {
         transform: scale(1.1);
-        box-shadow: 0 12px 40px rgba(62, 39, 35, 0.4);
+        background: rgba(0,0,0,0.9);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
       }
 
       #time-display, #volume-container {
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(253, 246, 238, 0.1);
+        backdrop-filter: blur(10px);
+        background: rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.1);
       }
 
       #video-container {
-        box-shadow: 0 20px 60px rgba(62, 39, 35, 0.15);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        border-radius: 24px;
+        overflow: hidden;
       }
 
-      /* Video player mobile optimizations */
+      /* Gradient text */
+      .gradient-text {
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Input styles */
+      input, textarea {
+        font-size: 16px;
+        padding: 14px 18px;
+        border-radius: 12px;
+        border: 2px solid var(--border);
+        background: white;
+        transition: all 0.3s;
+        width: 100%;
+      }
+
+      input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--earth-green);
+        box-shadow: 0 0 0 3px rgba(107, 142, 35, 0.15);
+      }
+
+      /* Mobile optimizations */
       @media (max-width: 768px) {
-        #video-container {
-          border-radius: 12px;
+        button, .emoji-btn {
+          min-height: 44px;
+          min-width: 44px;
         }
-        
-        #play-button {
-          padding: 1rem;
+
+        .card {
+          padding: 24px;
         }
-        
-        #play-button svg {
-          width: 2rem;
-          height: 2rem;
+
+        .emoji-btn {
+          width: 60px;
+          height: 60px;
+          font-size: 24px;
+          padding: 12px;
         }
-        
-        #time-display, #volume-container {
-          bottom: 0.5rem;
-          font-size: 0.75rem;
+
+        #chat-container {
+          height: 200px;
         }
-        
-        #volume-container {
-          left: 0.5rem;
-        }
-        
-        #time-display {
-          right: 0.5rem;
-        }
-        
-        #volume-slider {
-          width: 3rem;
-        }
+      }
+
+      /* Hero section background */
+      .hero-bg {
+        background: #ffffff;
+        position: relative;
+        overflow: visible;
+        width: 100%;
+      }
+
+      .hero-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 20% 50%, rgba(107, 142, 35, 0.05) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(90, 122, 31, 0.05) 0%, transparent 50%);
+        pointer-events: none;
+      }
+
+      .hero-bg::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(107, 142, 35, 0.08) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      /* Rotating jeans circle background - bottom right */
+      .jeans-circle-bg {
+        position: absolute;
+        bottom: -150px;
+        right: -200px;
+        width: 1000px;
+        height: 1000px;
+        max-width: 120vw;
+        max-height: 120vh;
+        background-image: url('bestjeancircle.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.35;
+        pointer-events: none;
+        z-index: 999;
+        transform: translate(50%, 50%) rotate(0deg);
+        transform-origin: center center;
+        animation: rotate-jeans 80s linear infinite;
+        filter: blur(0px);
+      }
+
+      /* Rotating jacket circle background - top left */
+      .jacket-circle-bg {
+        position: absolute;
+        top: 10%;
+        left: 0%;
+        width: 1000px;
+        height: 1000px;
+        max-width: 120vw;
+        max-height: 120vh;
+        background-image: url('betterjacketcircle.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.4;
+        pointer-events: none;
+        z-index: 0;
+        transform: translate(-50%, -50%) rotate(0deg);
+        transform-origin: center center;
+        animation: rotate-jacket 100s linear infinite reverse;
+        filter: blur(0px);
+      }
+
+      /* Add a subtle overlay to ensure text readability */
+      .hero-bg::before {
+        z-index: 1;
+      }
+
+      /* Ensure content is above the rotating background */
+      .hero-content {
+        position: relative;
+        z-index: 20;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      /* Add a subtle overlay for better text contrast */
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.3);
+        pointer-events: none;
+        z-index: 5;
+      }
+
+      /* Section backgrounds */
+      .section-alt {
+        background: #ffffff;
+        position: relative;
+      }
+
+      .section-gradient {
+        background: #ffffff;
+        position: relative;
+      }
+
+      /* Section wrapper */
+      .section-wrapper {
+        background: #ffffff;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        width: 100%;
+      }
+
+      /* Decorative shapes */
+      .shape-blob {
+        position: absolute;
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        opacity: 0.1;
+        pointer-events: none;
+      }
+
+      .shape-blob-1 {
+        width: 400px;
+        height: 400px;
+        background: linear-gradient(135deg, rgba(107, 142, 35, 0.08) 0%, rgba(90, 122, 31, 0.08) 100%);
+        top: -100px;
+        right: -100px;
+        animation: blob 20s ease-in-out infinite;
+      }
+
+      .shape-blob-2 {
+        width: 300px;
+        height: 300px;
+        background: linear-gradient(135deg, rgba(90, 122, 31, 0.08) 0%, rgba(107, 142, 35, 0.08) 100%);
+        bottom: -50px;
+        left: -50px;
+        animation: blob 25s ease-in-out infinite reverse;
+      }
+
+      @keyframes blob {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+      }
+
+      /* Pattern overlay */
+      .pattern-dots {
+        background-image: radial-gradient(circle, rgba(107, 142, 35, 0.08) 1px, transparent 1px);
+        background-size: 20px 20px;
+        opacity: 0.3;
+      }
+
+      /* Grid pattern */
+      .grid-pattern {
+        background-image: 
+          linear-gradient(rgba(107, 142, 35, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(107, 142, 35, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+      }
+
+      /* Badge styles */
+      .badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        background: var(--bg-alt);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      /* Navigation bar */
+      .nav-bar {
+        position: fixed;
+        top: 84px;
+        right: 148px;
+        transform: translateY(-50%);
+        width: auto;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        padding: 8px 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+      }
+
+      .nav-bar ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0 16px;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 48px;
+      }
+
+      .nav-bar li {
+        margin: 0;
+      }
+
+      .nav-bar a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 18px;
+        transition: color 0.3s ease;
+        padding: 8px 0;
+      }
+
+      .nav-bar a:hover {
+        color: var(--earth-green);
+      }
+
+      /* Logo positioned outside navigation bar */
+      .hero-logo {
+        position: fixed;
+        top: 24px;
+        right: 12px;
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        z-index: 1001;
+      }
+
+      .hero-logo img {
+        height: 80px;
+        width: auto;
+        /* Always green color to match website theme */
+        filter: brightness(0) saturate(100%) invert(27%) sepia(45%) saturate(1200%) hue-rotate(60deg) brightness(0.9) contrast(1.1);
       }
     </style>
   </head>
-  <body class="min-h-screen flex flex-col justify-between">
+  <body class="min-h-screen flex flex-col w-full">
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Logo positioned outside navigation bar -->
+    <div class="hero-logo">
+      <img src="swagsearchlogo.svg" alt="Swagsearch" />
+    </div>
+
     <!-- Hero Section -->
-    <section class="flex flex-col items-center justify-center min-h-[80vh] pt-20 pb-12 px-4">
-      <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-8 md:mb-12 tracking-widest text-center uppercase">SWAGSEARCH</h1>
-      <h2 class="text-xl md:text-2xl font-light mb-8 text-center tracking-wide">The internet's best thrift finds — powered by you.</h2>
-      <p id="hero-animated" class="typewriter text-lg md:text-xl text-center mt-4 mb-10 font-light" style="min-height:2.5em;"></p>
-      
-      <!-- Navigation Buttons -->
-      <div class="flex flex-col md:flex-row gap-6 mt-8">
-        <button id="buying-btn" class="px-8 py-4 bg-[#3e2723] text-[#fdf6ee] font-semibold text-lg rounded-lg transition-all duration-300 hover:bg-[#5d4037] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#a1887f]">
-          I'm a Buyer
-        </button>
-        <button id="finding-btn" class="px-8 py-4 border-2 border-[#3e2723] text-[#3e2723] font-semibold text-lg rounded-lg transition-all duration-300 hover:bg-[#3e2723] hover:text-[#fdf6ee] hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#a1887f]">
-          I'm a Finder
-        </button>
+    <section class="hero-bg flex flex-col items-center justify-center min-h-[90vh] pt-16 pb-16 px-4 relative">
+      <div class="jacket-circle-bg"></div>
+      <div class="jeans-circle-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="shape-blob shape-blob-1"></div>
+      <div class="shape-blob shape-blob-2"></div>
+      <div class="max-w-5xl mx-auto text-center hero-content relative z-10 w-full">
+        <h1 class="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold mb-16 tracking-tight">
+          <span class="gradient-text">SWAGSEARCH</span>
+        </h1>
+        <p id="hero-animated" class="typewriter text-2xl md:text-3xl lg:text-4xl text-gray-600 mb-16 font-medium min-h-[2.5em] mx-auto" style="max-width: 800px;"></p>
+        
+        <!-- Navigation Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <button id="buying-btn" class="btn-primary w-full sm:w-auto">
+            I'm a Buyer
+          </button>
+          <button id="finding-btn" class="btn-secondary w-full sm:w-auto">
+            I'm a Finder
+          </button>
+        </div>
       </div>
     </section>
 
     <!-- Finding Section -->
-    <section id="finding-section" class="max-w-6xl mx-auto py-16 px-4 fade-in">
-      <h3 class="font-display text-3xl md:text-5xl font-bold mb-20 text-center">You find. We feature. They buy.</h3>
-      <div class="grid md:grid-cols-3 gap-12 mb-16">
-        <div class="text-center">
-          <div class="text-6xl mb-4">🕵️‍♂️</div>
-          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Find something sick online</h4>
-          <p class="text-xl md:text-2xl" id="store-cycler">You're already scrolling Depop. Might as well save a gem.</p>
+    <section id="finding-section" class="section-wrapper fade-in">
+      <div class="max-w-7xl mx-auto py-20 px-4 section-gradient relative overflow-visible">
+        <div class="shape-blob shape-blob-1" style="width: 300px; height: 300px; top: 10%; right: 5%;"></div>
+        <div class="text-center mb-12 relative z-10">
+        <h3 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+          You find. We feature. <span class="gradient-text">They buy.</span>
+        </h3>
+        <p class="text-xl text-gray-700 max-w-2xl mx-auto mt-4">Turn your thrifting skills into income</p>
+      </div>
+
+      <div class="card-grid md:grid-cols-3 relative z-10">
+        <div class="card text-center">
+          <div class="text-6xl mb-4 animate-float">🕵️‍♂️</div>
+          <h4 class="font-bold mb-3 text-2xl">Find something sick online</h4>
+          <p class="text-base text-gray-700" id="store-cycler">You're already scrolling Depop. Might as well save a gem.</p>
         </div>
-        <div class="text-center">
-          <div class="text-6xl mb-4">📤</div>
-          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Send it with one click</h4>
-          <p class="text-xl md:text-2xl">Our browser extension lets you push listings to Swagsearch instantly.</p>
+        <div class="card text-center">
+          <div class="text-6xl mb-4 animate-float" style="animation-delay: 0.2s;">📤</div>
+          <h4 class="font-bold mb-3 text-2xl">Send it with one click</h4>
+          <p class="text-base text-gray-700">Our browser extension lets you push listings to Swagsearch instantly.</p>
         </div>
-        <div class="text-center">
-          <div class="text-6xl mb-4">💸</div>
-          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Get paid when someone buys</h4>
-          <p class="text-xl md:text-2xl">When a listing you found is unlocked, you get a cut. Simple.</p>
+        <div class="card text-center">
+          <div class="text-6xl mb-4 animate-float" style="animation-delay: 0.4s;">💸</div>
+          <h4 class="font-bold mb-3 text-2xl">Get paid when someone buys</h4>
+          <p class="text-base text-gray-700">When a listing you found is unlocked, you get a cut. Simple.</p>
         </div>
       </div>
 
       <!-- Video Demo Section -->
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-12">
-          <h3 class="font-display text-3xl md:text-4xl font-bold mb-6">See the Finder Extension in Action</h3>
-          <p class="text-xl text-[#5d4037] mb-8">Watch how easy it is to discover and share amazing finds with our browser extension</p>
+      <div class="max-w-5xl mx-auto relative z-10">
+        <div class="text-center mb-8">
+          <h3 class="font-display text-3xl md:text-4xl font-bold mb-4">See the Finder Extension in Action</h3>
+          <p class="text-lg text-gray-600 mb-8">Watch how easy it is to discover and share amazing finds</p>
         </div>
         
         <!-- Custom Video Player -->
-        <div class="relative bg-[#f5e9da] rounded-2xl overflow-hidden shadow-2xl border-2 border-[#a1887f]">
-          <!-- Video Container -->
+        <div class="card p-0 overflow-hidden">
           <div id="video-container" class="relative aspect-video bg-black">
             <video 
               id="demo-video" 
               class="w-full h-full object-cover"
-              poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Crect width='1280' height='720' fill='%233e2723'/%3E%3Ctext x='640' y='360' text-anchor='middle' fill='%23fdf6ee' font-family='Inter, sans-serif' font-size='48' font-weight='bold'%3ESWAGSEARCH%3C/text%3E%3Ctext x='640' y='420' text-anchor='middle' fill='%23fdf6ee' font-family='Inter, sans-serif' font-size='24'%3EFinder Extension Demo%3C/text%3E%3C/svg%3E"
+              poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Crect width='1280' height='720' fill='%23000000'/%3E%3Ctext x='640' y='360' text-anchor='middle' fill='%23ffffff' font-family='Inter, sans-serif' font-size='48' font-weight='bold'%3ESWAGSEARCH%3C/text%3E%3Ctext x='640' y='420' text-anchor='middle' fill='%23ffffff' font-family='Inter, sans-serif' font-size='24'%3EFinder Extension Demo%3C/text%3E%3C/svg%3E"
               preload="metadata"
               muted
               loop
@@ -437,7 +880,7 @@
             <!-- Custom Controls Overlay -->
             <div id="video-controls" class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
               <!-- Play Button -->
-              <button id="play-button" class="bg-[#3e2723] bg-opacity-90 hover:bg-opacity-100 text-[#fdf6ee] rounded-full p-6 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-[#a1887f]">
+              <button id="play-button" class="text-white rounded-full p-6 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50">
                 <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z"/>
                 </svg>
@@ -446,189 +889,215 @@
             
             <!-- Progress Bar -->
             <div id="progress-container" class="absolute bottom-0 left-0 right-0 h-2 bg-black bg-opacity-50">
-              <div id="progress-bar" class="h-full bg-[#3e2723] transition-all duration-100" style="width: 0%"></div>
+              <div id="progress-bar" class="h-full transition-all duration-100" style="width: 0%"></div>
             </div>
             
             <!-- Time Display -->
-            <div id="time-display" class="absolute bottom-4 right-4 bg-black bg-opacity-70 text-[#fdf6ee] px-3 py-1 rounded text-sm font-mono">
+            <div id="time-display" class="absolute bottom-4 right-4 text-white px-3 py-1.5 rounded-lg text-sm font-mono">
               <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
             </div>
             
-                      <!-- Volume Control -->
-          <div id="volume-container" class="absolute bottom-4 left-4 flex items-center bg-black bg-opacity-70 rounded px-3 py-1">
-            <button id="volume-button" class="text-[#fdf6ee] mr-2 hover:text-[#a1887f] transition-colors">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-              </svg>
-            </button>
-            <input id="volume-slider" type="range" min="0" max="100" value="100" class="w-16 h-1 bg-[#a1887f] rounded-lg appearance-none cursor-pointer">
-          </div>
+            <!-- Volume Control -->
+            <div id="volume-container" class="absolute bottom-4 left-4 flex items-center rounded-lg px-3 py-1.5">
+              <button id="volume-button" class="text-white mr-2 hover:opacity-70 transition-opacity">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+              </button>
+              <input id="volume-slider" type="range" min="0" max="100" value="100" class="w-16 h-1 rounded-lg appearance-none cursor-pointer">
+            </div>
 
-          <!-- Pause/Play Button -->
-          <div id="pause-container" class="absolute bottom-4 left-4 ml-32 flex items-center bg-black bg-opacity-70 rounded px-3 py-1">
-            <button id="pause-button" class="text-[#fdf6ee] hover:text-[#a1887f] transition-colors">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-              </svg>
-            </button>
-          </div>
+            <!-- Pause/Play Button -->
+            <div id="pause-container" class="absolute bottom-4 left-32 flex items-center rounded-lg px-3 py-1.5">
+              <button id="pause-button" class="text-white hover:opacity-70 transition-opacity">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+              </button>
+            </div>
           </div>
           
           <!-- Video Info -->
-          <div class="p-6">
+          <div class="p-6 bg-white">
             <div class="flex items-center justify-between mb-4">
-              <h4 class="font-display text-xl font-bold text-[#3e2723]">Finder Extension Demo</h4>
-              <div class="flex items-center space-x-2">
-                <span class="bg-[#3e2723] text-[#fdf6ee] px-3 py-1 rounded-full text-sm font-semibold">2:45</span>
-                <span class="bg-[#a1887f] text-[#fdf6ee] px-3 py-1 rounded-full text-sm">HD</span>
+              <h4 class="font-display text-xl font-bold">Finder Extension Demo</h4>
+              <div class="flex items-center gap-2">
+                <span class="badge">2:45</span>
+                <span class="badge">HD</span>
               </div>
             </div>
-            <p class="text-[#5d4037] mb-4">See how our browser extension makes it effortless to discover and share amazing thrift finds. From finding the perfect vintage piece to sending it to Swagsearch with one click.</p>
+            <p class="text-gray-600 mb-4">See how our browser extension makes it effortless to discover and share amazing thrift finds. From finding the perfect vintage piece to sending it to Swagsearch with one click.</p>
             <div class="flex flex-wrap gap-2">
-              <span class="bg-[#eaddcf] text-[#3e2723] px-3 py-1 rounded-full text-sm">Browser Extension</span>
-              <span class="bg-[#eaddcf] text-[#3e2723] px-3 py-1 rounded-full text-sm">One-Click Share</span>
-              <span class="bg-[#eaddcf] text-[#3e2723] px-3 py-1 rounded-full text-sm">Instant Upload</span>
-              <span class="bg-[#eaddcf] text-[#3e2723] px-3 py-1 rounded-full text-sm">Finder Tools</span>
+              <span class="badge">Browser Extension</span>
+              <span class="badge">One-Click Share</span>
+              <span class="badge">Instant Upload</span>
+              <span class="badge">Finder Tools</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-
-
     <!-- Buying Section -->
-    <section id="buying-section" class="max-w-6xl mx-auto pt-8 pb-16 px-4 fade-in hidden">
-      <h3 class="font-display text-3xl md:text-5xl font-bold mb-20 text-center">Discover. Unlock. Own.</h3>
-      <div class="grid md:grid-cols-3 gap-12 mb-16">
-        <div class="text-center">
-          <div class="text-6xl mb-4">🔍</div>
-          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Discover curated finds</h4>
-          <p class="text-xl md:text-2xl">Browse handpicked secondhand fashion from real people with real taste.</p>
+    <section id="buying-section" class="section-wrapper fade-in hidden">
+      <div class="max-w-7xl mx-auto py-20 px-4 section-alt relative overflow-visible">
+        <div class="grid-pattern absolute inset-0 opacity-20"></div>
+        <div id="buying-header" class="text-center mb-12 relative z-10 fade-in">
+          <h3 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+            Discover. Unlock. <span class="gradient-text">Own.</span>
+          </h3>
+          <p class="text-xl text-gray-700 max-w-2xl mx-auto mt-4">Find exactly what you're looking for</p>
         </div>
-        <div class="text-center">
-          <div class="text-6xl mb-4">🔓</div>
-          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Unlock the listing</h4>
-          <p class="text-xl md:text-2xl">Get the direct link to purchase from the original seller.</p>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-12 relative z-10">
+        <div class="card text-center">
+          <div class="text-6xl mb-4 animate-float">🔍</div>
+          <h4 class="font-bold mb-3 text-2xl">Discover curated finds</h4>
+          <p class="text-base text-gray-700">Browse handpicked secondhand fashion from real people with real taste.</p>
         </div>
-        <div class="text-center">
-          <div class="text-6xl mb-4">✨</div>
-          <h4 class="font-semibold mb-4 text-2xl md:text-3xl">Own your style</h4>
-          <p class="text-xl md:text-2xl">Buy directly from the source and support the finder who discovered it.</p>
+        <div class="card text-center">
+          <div class="text-6xl mb-4 animate-float" style="animation-delay: 0.2s;">🔓</div>
+          <h4 class="font-bold mb-3 text-2xl">Unlock the listing</h4>
+          <p class="text-base text-gray-700">Get the direct link to purchase from the original seller.</p>
+        </div>
+        <div class="card text-center">
+          <div class="text-6xl mb-4 animate-float" style="animation-delay: 0.4s;">✨</div>
+          <h4 class="font-bold mb-3 text-2xl">Own your style</h4>
+          <p class="text-base text-gray-700">Buy directly from the source and support the finder who discovered it.</p>
         </div>
       </div>
       
-      <!-- Advanced Categorization Section -->
-      <div class="max-w-6xl mx-auto">
-        <h4 class="font-display text-2xl md:text-3xl font-bold mb-8 text-center">AI-Powered Precision</h4>
-        <div class="grid md:grid-cols-2 gap-12 items-start">
-          <div>
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
-              <h5 class="font-bold text-xl md:text-2xl">Ultra-Niche Categorization</h5>
-              <div class="flex gap-2 md:gap-4 justify-center md:justify-end">
-                <button class="emoji-btn active text-xl md:text-2xl p-2 md:p-3 rounded-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#a1887f]" data-category="tees">👕</button>
-                <button class="emoji-btn text-xl md:text-2xl p-2 md:p-3 rounded-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#a1887f]" data-category="jeans">👖</button>
-                <button class="emoji-btn text-xl md:text-2xl p-2 md:p-3 rounded-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#a1887f]" data-category="jackets">🧥</button>
-                <button class="emoji-btn text-xl md:text-2xl p-2 md:p-3 rounded-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#a1887f]" data-category="shoes">👟</button>
+        <!-- Advanced Categorization Section -->
+        <div class="max-w-6xl mx-auto relative z-10">
+          <div class="card mb-0">
+          <h4 class="font-display text-2xl md:text-3xl font-bold mb-6 text-center">AI-Powered Precision</h4>
+          <div class="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+                <h5 class="font-bold text-xl md:text-2xl">Ultra-Niche Categorization</h5>
+                <div class="flex gap-3 justify-center md:justify-end flex-wrap">
+                  <button class="emoji-btn active" data-category="tees">👕</button>
+                  <button class="emoji-btn" data-category="jeans">👖</button>
+                  <button class="emoji-btn" data-category="jackets">🧥</button>
+                  <button class="emoji-btn" data-category="shoes">👟</button>
+                </div>
               </div>
+              <p class="text-lg mb-4 text-gray-700">Forget generic "vintage" or "streetwear" tags. Our AI analyzes every detail:</p>
+              <ul id="category-details" class="text-lg space-y-3 mb-6 transition-all duration-500 text-gray-700">
+                <li>• <strong>Construction:</strong> Single stitch, double stitch, chain stitch, selvedge denim</li>
+                <li>• <strong>Fabric Details:</strong> Slub cotton, heavyweight tees, loopwheel, pique knit</li>
+                <li>• <strong>Vintage Markers:</strong> Sun faded, vintage wash, acid wash, stone wash</li>
+                <li>• <strong>Fit & Silhouette:</strong> Cropped tees, oversized fits, boxy cuts, drop shoulders</li>
+                <li>• <strong>Condition & Rarity:</strong> Deadstock, one-of-one, limited releases, sample pieces</li>
+              </ul>
+              <p class="text-lg text-gray-700">Describe what you want in plain English. Our AI finds the exact match from thousands of listings, ensuring you get the best possible price our finders can discover.</p>
             </div>
-            <p class="text-lg mb-4">Forget generic "vintage" or "streetwear" tags. Our AI analyzes every detail:</p>
-            <ul id="category-details" class="text-lg space-y-2 mb-6 transition-all duration-500">
-              <li>• <strong>Construction:</strong> Single stitch, double stitch, chain stitch, selvedge denim</li>
-              <li>• <strong>Fabric Details:</strong> Slub cotton, heavyweight tees, loopwheel, pique knit</li>
-              <li>• <strong>Vintage Markers:</strong> Sun faded, vintage wash, acid wash, stone wash</li>
-              <li>• <strong>Fit & Silhouette:</strong> Cropped tees, oversized fits, boxy cuts, drop shoulders</li>
-              <li>• <strong>Condition & Rarity:</strong> Deadstock, one-of-one, limited releases, sample pieces</li>
-            </ul>
-            <p class="text-lg">Describe what you want in plain English. Our AI finds the exact match from thousands of listings, ensuring you get the best possible price our finders can discover.</p>
-          </div>
-          
-          <!-- AI Chatbot Demo -->
-          <div class="bg-[#f5e9da] rounded-lg p-6 border border-[#a1887f]">
-            <div class="flex items-center mb-4">
-              <div class="text-2xl mr-3">🤖</div>
-              <h5 class="font-semibold text-lg">Swagsearch AI Assistant</h5>
-            </div>
-            <div id="chat-container" class="h-64 overflow-y-auto mb-4 space-y-4 px-2">
-              <div class="bg-[#eaddcf] rounded-2xl rounded-tl-md p-3 text-sm max-w-[85%] ml-0 opacity-0 transform translate-y-2 animate-fade-in">
-                <strong>AI:</strong> Hi! I'm here to help you find exactly what you're looking for. Just describe the item and I'll categorize it perfectly.
+            
+            <!-- AI Chatbot Demo -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+              <div class="flex items-center mb-4">
+                <div class="text-3xl mr-3">🤖</div>
+                <h5 class="font-semibold text-lg">Swagsearch AI Assistant</h5>
               </div>
+              <div id="chat-container" class="h-64 overflow-y-auto mb-4 space-y-4 px-2">
+                <div class="bg-white rounded-2xl rounded-tl-md p-4 text-sm max-w-[85%] ml-0 opacity-0 transform translate-y-2 animate-fade-in shadow-sm">
+                  <strong>AI:</strong> Hi! I'm here to help you find exactly what you're looking for. Just describe the item and I'll categorize it perfectly.
+                </div>
+              </div>
+              <div class="flex items-center">
+                <input type="text" id="chat-input" placeholder="Describe what you're looking for..." class="flex-1 px-4 py-2.5 rounded-l-lg border-2 border-gray-200 bg-white text-gray-500 text-sm focus:outline-none cursor-not-allowed" disabled>
+                <button id="chat-send" class="px-4 py-2.5 bg-gray-200 text-gray-500 rounded-r-lg text-sm cursor-not-allowed" disabled>Send</button>
+              </div>
+              <div class="text-xs text-gray-500 mt-2 text-center">Demo: Auto-cycling through example queries</div>
             </div>
-            <div class="flex items-center">
-              <input type="text" id="chat-input" placeholder="Describe what you're looking for..." class="flex-1 px-3 py-2 rounded-l border border-[#a1887f] bg-gray-100 text-gray-500 text-sm focus:outline-none cursor-not-allowed" disabled>
-              <button id="chat-send" class="px-4 py-2 bg-gray-300 text-gray-500 rounded-r text-sm cursor-not-allowed" disabled>Send</button>
-            </div>
-            <div class="text-xs text-[#a1887f] mt-2">Demo: Auto-cycling through example queries</div>
           </div>
         </div>
+      </div>
       </div>
     </section>
 
     <!-- About Section -->
-    <section class="max-w-2xl mx-auto py-12 px-4 fade-in">
-      <h3 class="font-display text-2xl md:text-3xl font-bold mb-4">A curated chaos of secondhand brilliance.</h3>
-      <p class="text-lg mb-2">Swagsearch is a handpicked stream of the internet's best secondhand fashion — found by real people with real taste.</p>
-      <p class="text-lg mb-2">No algorithms. No bots. Just finders: thrifters, stylists, vintage heads, and internet diggers who know how to spot gold before it sells.</p>
-      <p class="text-lg">We're building the easiest way to share and discover the good stuff — before it disappears.</p>
+    <section class="section-wrapper fade-in">
+      <div class="max-w-4xl mx-auto py-16 px-4">
+        <div class="card text-center">
+        <h3 class="font-display text-3xl md:text-4xl font-bold mb-6">A curated chaos of secondhand brilliance.</h3>
+        <div class="space-y-4 text-lg text-gray-700 max-w-2xl mx-auto">
+          <p>Swagsearch is a handpicked stream of the internet's best secondhand fashion — found by real people with real taste.</p>
+          <p>No algorithms. No bots. Just finders: thrifters, stylists, vintage heads, and internet diggers who know how to spot gold before it sells.</p>
+          <p>We're building the easiest way to share and discover the good stuff — before it disappears.</p>
+        </div>
+      </div>
     </section>
 
     <!-- Contact Section -->
-    <section class="max-w-xl mx-auto py-12 px-4 fade-in">
-      <h3 class="font-display text-2xl md:text-3xl font-bold mb-4">Want in early?</h3>
-      <p class="mb-6">We’re opening up soon. If you’re a finder, stylist, developer, or just curious — drop us a message.</p>
-      <form id="contact-form" class="space-y-4">
-        <div class="flex flex-col md:flex-row gap-4">
-          <input type="text" name="name" placeholder="Name" required class="flex-1 px-4 py-3 rounded bg-[#f5e9da] border border-[#a1887f] focus:outline-none focus:ring-2 focus:ring-[#a1887f] text-[#3e2723] placeholder-[#a1887f]" />
-          <input type="email" name="email" placeholder="Email" required class="flex-1 px-4 py-3 rounded bg-[#f5e9da] border border-[#a1887f] focus:outline-none focus:ring-2 focus:ring-[#a1887f] text-[#3e2723] placeholder-[#a1887f]" />
+    <section class="section-wrapper fade-in">
+      <div class="max-w-2xl mx-auto py-16 px-4 relative">
+        <div class="card">
+        <h3 class="font-display text-3xl md:text-4xl font-bold mb-4 text-center">Want in early?</h3>
+        <p class="mb-8 text-center text-gray-600">We're opening up soon. If you're a finder, stylist, developer, or just curious — drop us a message.</p>
+        <form id="contact-form" class="space-y-4">
+          <div class="flex flex-col md:flex-row gap-4">
+            <input type="text" name="name" placeholder="Name" required />
+            <input type="email" name="email" placeholder="Email" required />
+          </div>
+          <textarea name="message" placeholder="Message" required rows="5"></textarea>
+          <button type="submit" class="btn-primary w-full">Send Message</button>
+        </form>
+        <div id="contact-success" class="hidden mt-6 text-center p-4 bg-white text-green-700 font-semibold rounded-lg border-2 border-green-500">
+          Thank you! We'll be in touch soon.
         </div>
-        <textarea name="message" placeholder="Message" required rows="4" class="w-full px-4 py-3 rounded bg-[#f5e9da] border border-[#a1887f] focus:outline-none focus:ring-2 focus:ring-[#a1887f] text-[#3e2723] placeholder-[#a1887f]"></textarea>
-        <button type="submit" class="w-full py-3 rounded bg-[#3e2723] text-[#fdf6ee] font-bold text-lg transition-transform duration-200 transform hover:scale-105 hover:bg-[#5d4037] focus:outline-none">Send</button>
-      </form>
-      <div id="contact-success" class="hidden mt-4 text-green-700 font-semibold text-center">Thank you! We'll be in touch soon.</div>
+      </div>
     </section>
+
     <!-- Footer -->
-    <footer class="text-center py-8 px-4 text-[#a1887f] text-sm fade-in">
-      <div>Swagsearch is in development.<br>Made by people who thrift too much. Built by hand.</div>
-      <div class="mt-2">© 2025 Swagsearch. All rights flipped.</div>
+    <footer class="text-center py-8 px-4 text-gray-600 text-sm fade-in border-t border-gray-200 mt-auto bg-white">
+      <div class="max-w-4xl mx-auto">
+        <p class="mb-2">Swagsearch is in development.</p>
+        <p class="mb-2">Made by people who thrift too much. Built by hand.</p>
+        <p class="mt-4">© 2025 Swagsearch. All rights flipped.</p>
+      </div>
     </footer>
+
     <script>
       // Typewriter animation for hero
       const heroLines = [
         "Real people. Real steals.",
-        "We don’t thrift for trends. We thrift for truth.",
+        "We don't thrift for trends. We thrift for truth.",
         "Find what no one else is looking for — until they are.",
         "Curated by humans, not algorithms.",
         "Thrifted treasures, handpicked daily.",
         "The thrill of the find, every time.",
-        "Discover what the bots can’t.",
-        "Vintage gold, before it’s gone.",
+        "Discover what the bots can't.",
+        "Vintage gold, before it's gone.",
         "For the seekers, not the scrollers.",
-        "Unlock the internet’s hidden gems.",
+        "Unlock the internet's hidden gems.",
         "Style with a story.",
         "Finders keepers, literally.",
-        "The best finds aren’t trending — yet.",
-        "Because taste can’t be automated.",
-        "Fashion’s best kept secrets, revealed.",
+        "The best finds aren't trending — yet.",
+        "Because taste can't be automated.",
+        "Fashion's best kept secrets, revealed.",
         "Scroll less. Find more.",
         "The future of thrifting is personal.",
         "Your next favorite piece is waiting.",
         "Not just secondhand — second to none.",
         "Where the rare becomes yours."
       ];
-      // Shuffle the lines for random cycling
+
       function shuffle(array) {
         let currentIndex = array.length, randomIndex;
         while (currentIndex !== 0) {
           randomIndex = Math.floor(Math.random() * currentIndex);
           currentIndex--;
-          [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+          [array[currentIndex], array[randomIndex]] = [array[currentIndex], array[randomIndex]];
         }
         return array;
       }
+
       let shuffledLines = shuffle([...heroLines]);
       let heroIndex = 0;
       let charIndex = 0;
       const heroEl = document.getElementById('hero-animated');
+
       function typeLine() {
         if (!heroEl) return;
         const line = shuffledLines[heroIndex];
@@ -646,6 +1115,7 @@
         }
       }
       typeLine();
+
       // Fade-in on scroll
       function onScrollFadeIn() {
         document.querySelectorAll('.fade-in').forEach(el => {
@@ -654,10 +1124,21 @@
             el.classList.add('visible');
           }
         });
+        
+        // Special handling for buying section header - only show when buying section is visible
+        const buyingSection = document.getElementById('buying-section');
+        const buyingHeader = document.getElementById('buying-header');
+        if (buyingSection && buyingHeader && !buyingSection.classList.contains('hidden')) {
+          const rect = buyingSection.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 60) {
+            buyingHeader.classList.add('visible');
+          }
+        }
       }
       window.addEventListener('scroll', onScrollFadeIn);
       window.addEventListener('DOMContentLoaded', onScrollFadeIn);
-      // Contact form mock
+
+      // Contact form
       document.getElementById('contact-form').addEventListener('submit', function(e) {
         e.preventDefault();
         document.getElementById('contact-success').classList.remove('hidden');
@@ -666,7 +1147,8 @@
           document.getElementById('contact-success').classList.add('hidden');
         }, 4000);
       });
-      // Store cycler for 'How It Works' section
+
+      // Store cycler
       const stores = [
         { name: "Depop", color: "#FF2300" },
         { name: "eBay", color: "#86b817" },
@@ -678,15 +1160,16 @@
         { name: "The RealReal", color: "#1a1a1a" },
         { name: "Vestiaire Collective", color: "#FF5928" }
       ];
+
       const storeCycler = document.getElementById('store-cycler');
       let storeIndex = 0;
+
       function cycleStore() {
         if (!storeCycler) return;
         const store = stores[storeIndex];
         
-        // Special handling for eBay with multi-color letters
         if (store.name === "eBay") {
-          const ebayColors = ["#E53238", "#0064D2", "#F5AF02", "#86B817"]; // Red, Blue, Yellow, Green
+          const ebayColors = ["#E53238", "#0064D2", "#F5AF02", "#86B817"];
           const coloredLetters = store.name.split('').map((letter, index) => 
             `<span class="font-bold" style="color: ${ebayColors[index % ebayColors.length]}">${letter}</span>`
           ).join('');
@@ -707,7 +1190,6 @@
       const buyingSection = document.getElementById('buying-section');
       
       function showFinding() {
-        // Fade out buying section
         buyingSection.style.opacity = '0';
         buyingSection.style.transform = 'translateX(20px)';
         
@@ -715,7 +1197,6 @@
           buyingSection.classList.add('hidden');
           findingSection.classList.remove('hidden');
           
-          // Fade in finding section
           findingSection.style.opacity = '0';
           findingSection.style.transform = 'translateX(-20px)';
           
@@ -725,15 +1206,14 @@
           }, 50);
         }, 300);
         
-        // Update button states
-        findingBtn.classList.add('bg-[#3e2723]', 'text-[#fdf6ee]');
-        findingBtn.classList.remove('border-2', 'border-[#3e2723]', 'text-[#3e2723]');
-        buyingBtn.classList.remove('bg-[#3e2723]', 'text-[#fdf6ee]');
-        buyingBtn.classList.add('border-2', 'border-[#3e2723]', 'text-[#3e2723]');
+        findingBtn.classList.add('btn-active');
+        findingBtn.classList.remove('btn-secondary');
+        findingBtn.classList.add('btn-primary');
+        buyingBtn.classList.remove('btn-primary', 'btn-active');
+        buyingBtn.classList.add('btn-secondary');
       }
       
       function showBuying() {
-        // Fade out finding section
         findingSection.style.opacity = '0';
         findingSection.style.transform = 'translateX(-20px)';
         
@@ -741,21 +1221,28 @@
           findingSection.classList.add('hidden');
           buyingSection.classList.remove('hidden');
           
-          // Fade in buying section
           buyingSection.style.opacity = '0';
           buyingSection.style.transform = 'translateX(20px)';
+          
+          // Hide buying header initially
+          const buyingHeader = document.getElementById('buying-header');
+          if (buyingHeader) {
+            buyingHeader.classList.remove('visible');
+          }
           
           setTimeout(() => {
             buyingSection.style.opacity = '1';
             buyingSection.style.transform = 'translateX(0)';
+            // Trigger scroll check to show header when user scrolls
+            setTimeout(() => onScrollFadeIn(), 100);
           }, 50);
         }, 300);
         
-        // Update button states
-        buyingBtn.classList.add('bg-[#3e2723]', 'text-[#fdf6ee]');
-        buyingBtn.classList.remove('border-2', 'border-[#3e2723]', 'text-[#3e2723]');
-        findingBtn.classList.remove('bg-[#3e2723]', 'text-[#fdf6ee]');
-        findingBtn.classList.add('border-2', 'border-[#3e2723]', 'text-[#3e2723]');
+        buyingBtn.classList.add('btn-active');
+        buyingBtn.classList.remove('btn-secondary');
+        buyingBtn.classList.add('btn-primary');
+        findingBtn.classList.remove('btn-primary', 'btn-active');
+        findingBtn.classList.add('btn-secondary');
       }
       
       findingBtn.addEventListener('click', showFinding);
@@ -763,7 +1250,7 @@
       
       // Show Buying section by default
       showBuying();
-      
+
       // AI Chatbot Demo
       const chatQueries = [
         {
@@ -809,16 +1296,17 @@
       ];
       
       let queryIndex = 0;
+      let chatTimeout = null;
+      let cycleTimeout = null;
       const chatContainer = document.getElementById('chat-container');
       
       function addMessage(message, isUser = false) {
         const messageDiv = document.createElement('div');
-        messageDiv.className = `bg-${isUser ? '[#3e2723] text-white' : '[#eaddcf]'} rounded-2xl ${isUser ? 'rounded-tr-md ml-auto' : 'rounded-tl-md ml-0'} p-3 text-sm max-w-[85%] opacity-0 transform translate-y-2`;
+        messageDiv.className = `bg-${isUser ? 'gray-900 text-white' : 'white'} rounded-2xl ${isUser ? 'rounded-tr-md ml-auto' : 'rounded-tl-md ml-0'} p-4 text-sm max-w-[85%] opacity-0 transform translate-y-2 shadow-sm`;
         messageDiv.innerHTML = `<strong>${isUser ? 'You' : 'AI'}:</strong> ${message}`;
         chatContainer.appendChild(messageDiv);
         chatContainer.scrollTop = chatContainer.scrollHeight;
         
-        // Animate in
         setTimeout(() => {
           messageDiv.classList.add('animate-fade-in');
         }, 100);
@@ -826,7 +1314,7 @@
       
       function addThinkingIndicator() {
         const thinkingDiv = document.createElement('div');
-        thinkingDiv.className = 'bg-[#eaddcf] rounded-2xl rounded-tl-md p-3 text-sm max-w-[85%] ml-0 animate-thinking';
+        thinkingDiv.className = 'bg-white rounded-2xl rounded-tl-md p-4 text-sm max-w-[85%] ml-0 animate-thinking shadow-sm';
         thinkingDiv.innerHTML = '<strong>AI:</strong> <span class="inline-block">Thinking</span><span class="dots">...</span>';
         chatContainer.appendChild(thinkingDiv);
         chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -840,16 +1328,13 @@
         
         const currentQuery = chatQueries[queryIndex];
         
-        // Add user query
         setTimeout(() => {
           addMessage(currentQuery.query, true);
         }, 2000);
         
-        // Add thinking indicator
         setTimeout(() => {
           const thinkingIndicator = addThinkingIndicator();
           
-          // Remove thinking indicator and add AI response
           setTimeout(() => {
             thinkingIndicator.remove();
             addMessage(currentQuery.response);
@@ -857,24 +1342,32 @@
         }, 3000);
         
         queryIndex++;
-        
-        // Schedule next query (longer delay for more natural feel)
-        setTimeout(cycleChatQueries, 8000);
+        cycleTimeout = setTimeout(cycleChatQueries, 8000);
+      }
+      
+      function stopChatDemo() {
+        if (chatTimeout) {
+          clearTimeout(chatTimeout);
+          chatTimeout = null;
+        }
+        if (cycleTimeout) {
+          clearTimeout(cycleTimeout);
+          cycleTimeout = null;
+        }
       }
       
       function startChatDemo() {
-        // Always clear chat and start demo regardless of section visibility
+        stopChatDemo();
         chatContainer.innerHTML = '';
         queryIndex = 0;
-        setTimeout(cycleChatQueries, 2000);
+        chatTimeout = setTimeout(cycleChatQueries, 2000);
       }
       
-      // Start demo when page loads and when switching to buying section
-      document.addEventListener('DOMContentLoaded', startChatDemo);
+      // Only start demo when buying section is shown, not on page load
       buyingBtn.addEventListener('click', () => {
         setTimeout(startChatDemo, 500);
       });
-      
+
       // Interactive Category Buttons
       const categoryDetails = {
         tees: {
@@ -911,7 +1404,6 @@
         const details = categoryDetails[category];
         const container = document.getElementById('category-details');
         
-        // Fade out
         container.style.opacity = '0';
         container.style.transform = 'translateY(10px)';
         
@@ -924,24 +1416,20 @@
             <li>• <strong>Condition & Rarity:</strong> ${details.condition}</li>
           `;
           
-          // Fade in
           container.style.opacity = '1';
           container.style.transform = 'translateY(0)';
         }, 250);
       }
       
       function handleCategoryClick(category) {
-        // Update button states
         document.querySelectorAll('.emoji-btn').forEach(btn => {
           btn.classList.remove('active');
         });
         event.target.classList.add('active');
         
-        // Update category details
         updateCategoryDetails(category);
       }
       
-      // Add event listeners to emoji buttons
       document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.emoji-btn').forEach(btn => {
           btn.addEventListener('click', (e) => {
@@ -966,14 +1454,12 @@
 
         if (!video) return;
 
-        // Format time in MM:SS
         function formatTime(seconds) {
           const mins = Math.floor(seconds / 60);
           const secs = Math.floor(seconds % 60);
           return `${mins}:${secs.toString().padStart(2, '0')}`;
         }
 
-        // Play/Pause functionality
         function togglePlay() {
           if (video.paused) {
             video.play();
@@ -1001,21 +1487,18 @@
           }
         }
 
-        // Update progress bar
         function updateProgress() {
           const progress = (video.currentTime / video.duration) * 100;
           progressBar.style.width = `${progress}%`;
           currentTimeSpan.textContent = formatTime(video.currentTime);
         }
 
-        // Seek functionality
         function seek(e) {
           const rect = progressContainer.getBoundingClientRect();
           const pos = (e.clientX - rect.left) / rect.width;
           video.currentTime = pos * video.duration;
         }
 
-        // Volume control
         function updateVolume() {
           video.volume = volumeSlider.value / 100;
           if (video.volume === 0) {
@@ -1033,7 +1516,6 @@
           }
         }
 
-        // Toggle mute
         function toggleMute() {
           video.muted = !video.muted;
           if (video.muted) {
@@ -1049,7 +1531,6 @@
           }
         }
 
-        // Event listeners
         playButton.addEventListener('click', togglePlay);
         pauseButton.addEventListener('click', togglePlay);
         video.addEventListener('click', togglePlay);
@@ -1058,12 +1539,10 @@
         volumeSlider.addEventListener('input', updateVolume);
         volumeButton.addEventListener('click', toggleMute);
 
-        // Update total time when metadata is loaded
         video.addEventListener('loadedmetadata', () => {
           totalTimeSpan.textContent = formatTime(video.duration);
         });
 
-        // Initialize pause button state when video loads
         video.addEventListener('loadeddata', () => {
           if (!video.paused) {
             pauseButton.innerHTML = `
@@ -1074,7 +1553,6 @@
           }
         });
 
-        // Show/hide controls on hover
         video.addEventListener('mouseenter', () => {
           videoControls.style.opacity = '1';
         });
@@ -1085,7 +1563,6 @@
           }
         });
 
-        // Hide play button when video is playing
         video.addEventListener('play', () => {
           playButton.style.display = 'none';
         });
@@ -1094,7 +1571,6 @@
           playButton.style.display = 'flex';
         });
 
-        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
           if (document.activeElement.tagName === 'INPUT') return;
           
@@ -1130,7 +1606,6 @@
           }
         });
 
-        // Mobile touch events
         let touchStartTime = 0;
         video.addEventListener('touchstart', (e) => {
           touchStartTime = Date.now();
@@ -1144,12 +1619,10 @@
             togglePlay();
           }
         });
-
-
       });
     </script>
     <div style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;user-select:none;z-index:-1;">
       secondhand clothing, secondhand clothing rare, secondhand clothing under $20, secondhand clothing with free shipping, secondhand fashion, secondhand fashion cheap, secondhand fashion under $20, secondhand fashion with free shipping, thrift finds, thrift finds in NYC, thrift finds for men, thrift finds 2025, thrifted clothes, thrifted clothes rare, thrifted clothes for men, thrifted clothes 2025, curated thrift, curated thrift cool, curated thrift under $50, curated thrift 2025, best secondhand deals, best secondhand deals with reviews, best secondhand deals cool, best secondhand deals for women, online thrift store, online thrift store cheap, online thrift store cool, online thrift store under $50, thrift fashion online, thrift fashion online cool, thrift fashion online with free shipping, thrift fashion online under $50, unique secondhand fashion, unique secondhand fashion under $50, unique secondhand fashion cheap, unique secondhand fashion rare, aesthetic secondhand clothes, aesthetic secondhand clothes under $50, aesthetic secondhand clothes with free shipping, aesthetic secondhand clothes under $20, thrift search engine, thrift search engine with free shipping, thrift search engine 2025, thrift search engine rare, curated fashion search, curated fashion search in NYC, curated fashion search 2025, curated fashion search with free shipping, vintage clothing search, vintage clothing search under $50, vintage clothing search 2025, vintage clothing search for men, how to find steals online, how to find steals online for men, how to find steals online for women, how to find steals online cool, where to find cheap designer, where to find cheap designer with reviews, where to find cheap designer under $50, where to find cheap designer 2025, fashion deal finder, fashion deal finder for women, fashion deal finder for men, fashion deal finder 2025, style curation platform, style curation platform under $20, style curation platform with reviews, style curation platform for women, resale marketplace aggregator, resale marketplace aggregator under $20, resale marketplace aggregator for women, resale marketplace aggregator under $50, how to find good stuff on depop, how to find good stuff on depop 2025, how to find good stuff on depop for women, how to find good stuff on depop with reviews, best finds on vinted, best finds on vinted for women, best finds on vinted under $50, best finds on vinted for men, depop finds, depop finds under $50, depop finds cheap, depop finds in NYC, mercari steals, mercari steals for men, mercari steals rare, mercari steals for women, ebay fashion deals, ebay fashion deals rare, ebay fashion deals cheap, ebay fashion deals for women, poshmark outfit ideas, poshmark outfit ideas for women, poshmark outfit ideas with reviews, poshmark outfit ideas rare, vinted hidden gems, vinted hidden gems for men, vinted hidden gems 2025, vinted hidden gems with reviews, vintage on ebay, vintage on ebay cool, vintage on ebay with reviews, vintage on ebay for men, best things on depop, best things on depop under $50, best things on depop cool, best things on depop with free shipping, underrated depop shops, underrated depop shops rare, underrated depop shops for men, underrated depop shops in NYC, cheap grails mercari, cheap grails mercari cheap, cheap grails mercari rare, cheap grails mercari under $20, affordable streetwear ebay, affordable streetwear ebay in NYC, affordable streetwear ebay cool, affordable streetwear ebay for men, affordable fashion, affordable fashion under $50, affordable fashion rare, affordable fashion for women, budget-friendly streetwear, budget-friendly streetwear under $20, budget-friendly streetwear 2025, budget-friendly streetwear with reviews, best fashion deals online, best fashion deals online cheap, best fashion deals online in NYC, best fashion deals online with reviews, cheap y2k fashion, cheap y2k fashion in NYC, cheap y2k fashion under $50, cheap y2k fashion 2025, low price vintage, low price vintage with free shipping, low price vintage with reviews, low price vintage rare, thrift fashion under $30, thrift fashion under $30 with free shipping, thrift fashion under $30 cool, thrift fashion under $30 under $20, designer dupes online, designer dupes online under $20, designer dupes online for women, designer dupes online with reviews, rare fashion steals, rare fashion steals under $20, rare fashion steals with free shipping, rare fashion steals rare, secondhand hypebeast deals, secondhand hypebeast deals for women, secondhand hypebeast deals with reviews, secondhand hypebeast deals with free shipping, fashion plug online, fashion plug online under $20, fashion plug online cool, fashion plug online rare, y2k fashion, y2k fashion under $50, y2k fashion with free shipping, y2k fashion cheap, coquette aesthetic clothes, coquette aesthetic clothes for women, coquette aesthetic clothes with reviews, coquette aesthetic clothes under $50, grunge fashion online, grunge fashion online 2025, grunge fashion online for women, grunge fashion online under $20, cottagecore style finds, cottagecore style finds with free shipping, cottagecore style finds for women, cottagecore style finds cool, balletcore thrift, balletcore thrift with reviews, balletcore thrift under $20, balletcore thrift for men, indie sleaze outfits, indie sleaze outfits for men, indie sleaze outfits under $20, indie sleaze outfits for women, soft girl fashion under $20, soft girl fashion under $20 under $20, soft girl fashion under $20 for women, soft girl fashion under $20 for men, techwear secondhand, techwear secondhand with free shipping, techwear secondhand rare, techwear secondhand for women, vintage ralph lauren online, vintage ralph lauren online cool, vintage ralph lauren online rare, vintage ralph lauren online under $50, 90s streetwear resale, 90s streetwear resale 2025, 90s streetwear resale with free shipping, 90s streetwear resale with reviews, get paid to thrift, get paid to thrift cool, get paid to thrift with free shipping, get paid to thrift 2025, finders fee platform, finders fee platform with reviews, finders fee platform cheap, finders fee platform 2025, share thrift finds, share thrift finds 2025, share thrift finds cool, share thrift finds under $20, resell fashion listings, resell fashion listings for women, resell fashion listings cheap, resell fashion listings cool, curated resale income, curated resale income 2025, curated resale income under $20, curated resale income with free shipping, become a swagsearch finder, become a swagsearch finder under $50, become a swagsearch finder in NYC, become a swagsearch finder cool, resale listing curator, resale listing curator cool, resale listing curator under $50, resale listing curator in NYC, depop resellers tools, depop resellers tools cool, depop resellers tools 2025, depop resellers tools cheap, monetize your taste, monetize your taste cool, monetize your taste for women, monetize your taste in NYC, passive income from fashion, passive income from fashion in NYC, passive income from fashion cheap, passive income from fashion cool, digital thrifting, digital thrifting rare, digital thrifting cool, digital thrifting cheap, gen z fashion tools, gen z fashion tools for women, gen z fashion tools rare, gen z fashion tools under $20, online resale economy, online resale economy in NYC, online resale economy cool, online resale economy for women, vintage fashion curation, vintage fashion curation cool, vintage fashion curation with free shipping, vintage fashion curation for men, sustainable fashion tech, sustainable fashion tech for women, sustainable fashion tech in NYC, sustainable fashion tech with free shipping, slow fashion platforms, slow fashion platforms cool, slow fashion platforms with free shipping, slow fashion platforms rare, resale marketplace aggregator, resale marketplace aggregator for women, resale marketplace aggregator with free shipping, resale marketplace aggregator rare, ethical fashion discovery, ethical fashion discovery 2025, ethical fashion discovery with free shipping, ethical fashion discovery under $50, AI for fashion deals, AI for fashion deals in NYC, AI for fashion deals for men, AI for fashion deals cool, search engine for clothes, search engine for clothes rare, search engine for clothes for women, search engine for clothes under $50
     </div>
   </body>
-</html> 
+</html>
